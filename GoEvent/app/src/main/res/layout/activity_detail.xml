@@ -12,7 +12,7 @@
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
 
-        <TextView android:text = "description" android:layout_width="wrap_content"
+        <TextView android:text = "@string/description" android:layout_width="wrap_content"
             android:layout_height = "wrap_content"
             android:id = "@+id/description_textview"
             android:layout_alignParentTop = "true"/>
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/location_textview"
             android:layout_below="@+id/description_content_textview"
-            android:text="Location"/>
+            android:text="@string/location"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/date_textview"
             android:layout_below="@+id/location_textview"
-            android:text="Date"/>
+            android:text="@string/date"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/time_textview"
             android:layout_below="@+id/date_content_textview"
-            android:text="Time"/>
+            android:text="@string/time"/>
 
         <TextView
             android:layout_width="wrap_content"
