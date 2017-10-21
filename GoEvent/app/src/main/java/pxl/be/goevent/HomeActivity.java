@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.map:
-                startActivity(new Intent(this, EventsActivity.class));
+                startActivity(new Intent(this, MapsActivity.class));
                 return true;
             case R.id.myevents:
                 startActivity(new Intent(this, HomeActivity.class));

@@ -21,5 +21,6 @@
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translatable="false">3500</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
