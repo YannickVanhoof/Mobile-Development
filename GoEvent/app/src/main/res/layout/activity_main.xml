@@ -29,7 +29,7 @@
             android:textColorHighlight = "@android:color/black"
             android:textColorHint = "@android:color/black"
             android:layout_marginTop = "46dp"
-            android:layout_below = "@+id/login_textview"
+            android:layout_below = "@+id/fb_login_button"
             android:layout_alignParentLeft = "true"
             android:layout_alignParentStart = "true"
             android:layout_alignParentRight = "true"
@@ -50,29 +50,6 @@
             android:textColorHint="@android:color/black"
             android:hint="@string/password" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/att"
-            android:id="@+id/textView2"
-            android:layout_below="@+id/password_editText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="25dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/attempts_textview"
-            android:layout_alignTop="@+id/textView2"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/textView2"
-            android:layout_toEndOf="@+id/login_textview"
-            android:textSize="25dp"
-            android:layout_toRightOf="@+id/login_textview" />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +67,22 @@
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/login_textview"
             android:layout_toEndOf="@+id/login_textview" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fb_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below = "@+id/login_textview"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/error"
+            android:layout_below="@+id/password_editText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="25dp"/>
 
     </RelativeLayout>
 
