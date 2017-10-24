@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.login.LoginManager;
+
 public class DetailActivity extends AppCompatActivity {
 
     @Override
@@ -42,6 +44,10 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.logout:
+                LoginManager.getInstance().logOut();
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

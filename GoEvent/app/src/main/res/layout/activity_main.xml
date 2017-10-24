@@ -5,85 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pxl.be.goevent.MainActivity">
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp"
+        android:orientation="vertical">
 
-        <TextView android:text = "@string/login" android:layout_width="wrap_content"
-            android:layout_height = "wrap_content"
-            android:id = "@+id/login_textview"
-            android:textSize = "35dp"
-            android:layout_alignParentTop = "true"
-            android:layout_centerHorizontal = "true" />
-
-
-        <EditText
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:id = "@+id/name_editText"
-            android:hint = "@string/logintext"
-            android:focusable = "true"
-            android:textColorHighlight = "@android:color/black"
-            android:textColorHint = "@android:color/black"
-            android:layout_marginTop = "46dp"
-            android:layout_below = "@+id/fb_login_button"
-            android:layout_alignParentLeft = "true"
-            android:layout_alignParentStart = "true"
-            android:layout_alignParentRight = "true"
-            android:layout_alignParentEnd = "true" />
+    <TextView android:text = "@string/login" android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:id = "@+id/login_textview"
+        android:textSize = "35sp"
+        android:layout_gravity="center_horizontal"/>
 
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/password_editText"
-            android:layout_below="@+id/name_editText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/name_editText"
-            android:layout_alignEnd="@+id/name_editText"
-            android:textColorHint="@android:color/black"
-            android:hint="@string/password" />
+    <EditText
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:id = "@+id/name_editText"
+        android:hint = "@string/logintext"
+        android:focusable = "true"
+        android:textColorHighlight = "@android:color/black"
+        android:textColorHint = "@android:color/black"
+        android:layout_marginTop = "46dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loginbutton"
-            android:id="@+id/login_button"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/login_textview"
-            android:layout_toStartOf="@+id/login_textview" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancelbutton"
-            android:id="@+id/cancel_button"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/login_textview"
-            android:layout_toEndOf="@+id/login_textview" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password_editText"
+        android:textColorHint="@android:color/black"
+        android:hint="@string/password" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/fb_login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below = "@+id/login_textview"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loginbutton"
+        android:id="@+id/login_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop = "46dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/error"
-            android:layout_below="@+id/password_editText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="25dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancelbutton"
+        android:id="@+id/cancel_button"
+        android:layout_gravity="center_horizontal"/>
 
-    </RelativeLayout>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop = "46dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/error"/>
+
+</LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
