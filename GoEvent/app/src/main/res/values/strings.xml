@@ -10,6 +10,7 @@
     // home menu
     <string name="app_name">GoEvent</string>
     <string name="myevents">My Events</string>
+    <string name="logout">Logout</string>
     // Detail
     <string name="description">Description</string>
     <string name="location">Location</string>
@@ -21,5 +22,7 @@
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translatable="false">3500</string>
+    <string name="title_activity_maps">Map</string>
 
+    <string name="facebook_app_id">1972604729664633</string>
 </resources>

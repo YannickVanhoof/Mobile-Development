@@ -10,17 +10,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 public class MainActivity extends AppCompatActivity {
 
     Button loginButton, cancelButton;
     EditText nameEditText, passwordEditText;
 
-    TextView attempts;
-    int counter = 3;
+    TextView errortextview;
+
+    LoginButton fbLoginButton;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         loginButton = (Button)findViewById(R.id.login_button);
@@ -28,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText = (EditText)findViewById(R.id.password_editText);
 
         cancelButton = (Button)findViewById(R.id.cancel_button);
-        attempts = (TextView)findViewById(R.id.attempts_textview);
-        attempts.setVisibility(View.GONE);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,15 +51,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-
-                    attempts.setVisibility(View.VISIBLE);
-                    attempts.setBackgroundColor(Color.RED);
-                    counter--;
-                    attempts.setText(Integer.toString(counter));
-
-                    if (counter == 0) {
-                        loginButton.setEnabled(false);
-                    }
                 }
             }
         });
@@ -62,5 +61,35 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        errortextview = (TextView) findViewById(R.id.error);
+        fbLoginButton = (LoginButton)findViewById(R.id.fb_login_button);
+        callbackManager = CallbackManager.Factory.create();
+        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(getApplicationContext(),
+                        "Redirecting...",Toast.LENGTH_SHORT).show();
+                //Start your second activity
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancel() {
+                errortextview.setText("Login Cancelled");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
