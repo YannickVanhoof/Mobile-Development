@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private ArrayAdapter<String> mHomeAdapter;
+    private SimpleAdapter mHomeAdapter;
 
     public HomeFragment() {
     }
@@ -30,45 +32,56 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Create some dummy data for the ListView.
-        String[] data = {
-                "Music",
-                "Dance",
-                "Food",
-                "Children",
-                "Movie",
-                "Party",
-                "Expo",
-                "Sport"
-        };
-        List<String> type = new ArrayList<String>(Arrays.asList(data));
+        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 
+        HashMap<String, String> map;
 
+        map = new HashMap<String, String>();
+        map.put("icon", String.valueOf(R.mipmap.music));
+        map.put("type", "Music");
+        listItem.add(map);
+        map = new HashMap<String, String>();
+        map.put("icon", String.valueOf(R.mipmap.dance));
+        map.put("type", "Dance");
+        listItem.add(map);
+        map = new HashMap<String, String>();
+        map.put("icon", String.valueOf(R.mipmap.party));
+        map.put("type", "Party");
+        listItem.add(map);
+        map = new HashMap<String, String>();
+        map.put("icon", String.valueOf(R.mipmap.expo));
+        map.put("type", "Expo");
+        listItem.add(map);
+        map = new HashMap<String, String>();
+        map.put("icon", String.valueOf(R.mipmap.sport));
+        map.put("type", "Sport");
+        listItem.add(map);
 
-        // Now that we have some dummy forecast data, create an ArrayAdapter.
-        // The ArrayAdapter will take data from a source (like our dummy forecast) and
-        // use it to populate the ListView it's attached to.
-        mHomeAdapter =
-                new ArrayAdapter<String>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_home, // The name of the layout ID.
-                        R.id.list_item_home_textview, // The ID of the textview to populate.
-                        type);
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Get a reference to the ListView, and attach this adapter to it.
+
+        mHomeAdapter = new SimpleAdapter (
+                getActivity(),
+                listItem,
+                R.layout.list_item_home,
+                new String[] {"icon", "type"},
+                new int[] {R.id.icon, R.id.list_item_home_textview});
+
         ListView listView = (ListView) rootView.findViewById(R.id.listview_home);
         listView.setAdapter(mHomeAdapter);
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String type = mHomeAdapter.getItem(position);
-                Log.d("tiepe" , type);
+                HashMap<String, String> map = (HashMap<String, String>) mHomeAdapter.getItem(position);
+                
+                Log.d("tiepe" , map.get("type"));
                 Intent intent = new Intent(getActivity(), EventsActivity.class)
-                        .putExtra("Type", type);
+                        .putExtra("Type", map.get("type"));
                 startActivity(intent);
 
             }
