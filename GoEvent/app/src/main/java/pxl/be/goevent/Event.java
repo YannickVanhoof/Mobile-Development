@@ -28,10 +28,11 @@ public class Event {
     private byte[] coverPhoto;
     private double longitude;
     private double latitude;
+    private String category;
     public Event(){
 
     }
-    public Event(int id, String name, String street, int houseNumber, String city, int postalCode, String venue, Date date, Time startTime, Time endTime, String description, AppUser organisator, List<AppUser> attendees, byte[] coverPhoto, double longitude, double latitude) {
+    public Event(int id, String name, String street, int houseNumber, String city, int postalCode, String venue, Date date, Time startTime, Time endTime, String description, AppUser organisator, List<AppUser> attendees, byte[] coverPhoto, double longitude, double latitude , String category) {
         this.id = id;
         this.name = name;
         Street = street;
@@ -48,6 +49,7 @@ public class Event {
         this.coverPhoto = coverPhoto;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.category = category;
     }
 
     public int getId() {
@@ -178,6 +180,14 @@ public class Event {
         this.latitude = latitude;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -197,6 +207,7 @@ public class Event {
                 ", coverPhoto=" + Arrays.toString(coverPhoto) +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
+                ", category='" + category + '\'' +
                 '}';
     }
 }

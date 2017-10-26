@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,8 +27,13 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
         if (savedInstanceState == null) {
+            String type = getIntent().getStringExtra("Type");
+            Bundle bundle = new Bundle();
+            bundle.putString("Type" , type);
+            EventFragment fragment = new EventFragment();
+            fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_event, new EventFragment())
+                    .add(R.id.container_event, fragment)
                     .commit();
         }
     }
@@ -40,6 +46,7 @@ public class EventsActivity extends AppCompatActivity {
 
     //TODO::menu items nog laten werken
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.map:
                 startActivity(new Intent(this, MapsActivity.class));

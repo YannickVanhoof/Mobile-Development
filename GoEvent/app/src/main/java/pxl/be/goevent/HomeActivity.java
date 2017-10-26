@@ -27,20 +27,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       ApiCaller caller = new ApiCaller();
-        try {
-            String json =caller.execute("http://goevent.azurewebsites.net/api/Event/1 ").get();
-            JsonParser parser = new JsonParser();
-            Event events = parser.JsonToEvent(json);
-            Log.d("Evenement" , events.toString());
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);

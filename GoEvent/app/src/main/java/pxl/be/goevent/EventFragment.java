@@ -3,6 +3,7 @@ package pxl.be.goevent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kimprzybylski on 14/10/17.
@@ -21,30 +26,40 @@ import java.util.List;
 public class EventFragment extends Fragment {
 
     private ArrayAdapter<String> mEventAdapter;
+    private String type;
 
-    public EventFragment() {
+    public EventFragment(){
+
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle bundle = getArguments();
+       String type = bundle.getString("Type");
 
         // Create some dummy data for the ListView.
-        String[] data = {
-                "Pukkelpop 25-08-2018 Kiewit",
-                "Tabdans 24-12-2018 Beringen",
-                "Grandma Baking 11-14-2018 Antwerpen",
-                "Aankomst Sint 1-12-2017 Brussel",
-                "Iron man 3-3-2018 Gent"
-        };
-        List<String> events = new ArrayList<String>(Arrays.asList(data));
+        List<String> events =null;
+        ApiCaller caller = new ApiCaller();
+        try {
+            String json = caller.execute("http://goevent.azurewebsites.net/api/Event").get();
+            JsonParser parser = new JsonParser();
+            Event[] eventsFromJson = parser.JsonToEventArray(json);
+            List<Event> filteredList = filterEventArrayByCategory(type,eventsFromJson);
+            String[] data = new String[filteredList.size()];
 
+            for (int i = 0; i < filteredList.size(); i++) {
+                data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDate();
 
-        // Now that we have some dummy forecast data, create an ArrayAdapter.
+            }
+            events = new ArrayList<>(Arrays.asList(data));;
+            Log.d("events" , events.size() +"");
+        }catch (InterruptedException | ExecutionException | JSONException e) {
+            e.printStackTrace();
+        }
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
         mEventAdapter =
-                new ArrayAdapter<String>(
+                new ArrayAdapter<>(
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_event, // The name of the layout ID.
                         R.id.list_item_event_textview, // The ID of the textview to populate.
@@ -68,5 +83,18 @@ public class EventFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private List<Event> filterEventArrayByCategory(String category , Event[] events){
+        List<Event>filtered = new ArrayList<>();
+        Log.d("bf filter events" , events.length +"");
+        for (Event event:events) {
+
+           if (Objects.equals(event.getCategory(), category)){
+                filtered.add(event);
+
+            }
+        }
+        return filtered;
     }
 }

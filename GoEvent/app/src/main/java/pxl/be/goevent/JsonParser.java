@@ -40,6 +40,7 @@ public class JsonParser {
             result.setStreet(e.getString("Street"));
             result.setVenue(e.getString("Venue"));
             result.setPostalCode(e.getInt("PostalCode"));
+            result.setCategory(e.getString("Category"));
             results[i] = result;
         }
         return results;
@@ -66,6 +67,7 @@ public class JsonParser {
             result.setStreet(event.getString("Street"));
             result.setVenue(event.getString("Venue"));
             result.setPostalCode(event.getInt("PostalCode"));
+            result.setCategory(event.getString("Category"));
 
         return result;
 

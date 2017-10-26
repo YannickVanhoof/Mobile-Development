@@ -3,6 +3,7 @@ package pxl.be.goevent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,13 @@ public class HomeFragment extends Fragment {
                 "Dance",
                 "Food",
                 "Children",
-                "Movie"
+                "Movie",
+                "Party",
+                "Expo",
+                "Sport"
         };
         List<String> type = new ArrayList<String>(Arrays.asList(data));
+
 
 
         // Now that we have some dummy forecast data, create an ArrayAdapter.
@@ -61,9 +66,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String type = mHomeAdapter.getItem(position);
+                Log.d("tiepe" , type);
                 Intent intent = new Intent(getActivity(), EventsActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, type);
+                        .putExtra("Type", type);
                 startActivity(intent);
+
             }
         });
 
