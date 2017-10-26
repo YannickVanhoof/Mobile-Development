@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by kimprzybylski on 14/10/17.
@@ -78,7 +75,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 HashMap<String, String> map = (HashMap<String, String>) mHomeAdapter.getItem(position);
-                
+
                 Log.d("tiepe" , map.get("type"));
                 Intent intent = new Intent(getActivity(), EventsActivity.class)
                         .putExtra("Type", map.get("type"));

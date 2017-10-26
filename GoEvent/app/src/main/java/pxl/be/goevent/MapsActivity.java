@@ -4,9 +4,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -23,6 +23,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -115,6 +119,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
+
+        ApiCaller caller = new ApiCaller();
+        try {
+            String json = caller.execute("http://goevent.azurewebsites.net/api/Event").get();
+            JsonParser parser = new JsonParser();
+            Event[] events = parser.JsonToEventArray(json);
+
+            for (int i = 0; i < events.length; i++) {
+                LatLng latLng = new LatLng(events[i].getLatitude(), events[i].getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title(events[i].getName());
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+            }
+        }catch (InterruptedException | ExecutionException | JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
