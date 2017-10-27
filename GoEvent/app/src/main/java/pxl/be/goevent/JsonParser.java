@@ -1,12 +1,8 @@
 package pxl.be.goevent;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Date;
 
 /**
  * Created by 11500046 on 24/10/2017.

@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import pxl.be.goevent.AppUser;
-
 /**
  * Created by 11500046 on 24/10/2017.
  */
