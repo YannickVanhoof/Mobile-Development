@@ -27,7 +27,7 @@ public class EventFragment extends Fragment {
 
     private ArrayAdapter<String> mEventAdapter;
     private String type;
-
+    private List<Event> filteredList;
     public EventFragment(){
 
     }
@@ -44,15 +44,15 @@ public class EventFragment extends Fragment {
             String json = caller.execute("http://goevent.azurewebsites.net/api/Event").get();
             JsonParser parser = new JsonParser();
             Event[] eventsFromJson = parser.JsonToEventArray(json);
-            List<Event> filteredList = filterEventArrayByCategory(type,eventsFromJson);
+            filteredList = filterEventArrayByCategory(type,eventsFromJson);
             String[] data = new String[filteredList.size()];
 
             for (int i = 0; i < filteredList.size(); i++) {
                 data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDate();
 
             }
-            events = new ArrayList<>(Arrays.asList(data));;
-            Log.d("events" , events.size() +"");
+            events = new ArrayList<>(Arrays.asList(data));
+
         }catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
@@ -75,9 +75,11 @@ public class EventFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 String detail = mEventAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, detail);
+                        .putExtra(Intent.EXTRA_TEXT, detail)
+                        .putExtra("EventId" , filteredList.get(position).getId() +"");
                 startActivity(intent);
             }
         });

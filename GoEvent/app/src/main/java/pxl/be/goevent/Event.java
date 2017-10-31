@@ -208,4 +208,8 @@ public class Event {
                 ", category='" + category + '\'' +
                 '}';
     }
+
+    public String getAddress() {
+        return getStreet() + " " + houseNumber + ", " + getPostalCode() + " " + getCity();
+    }
 }

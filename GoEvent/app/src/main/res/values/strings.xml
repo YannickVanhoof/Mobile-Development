@@ -25,4 +25,11 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="facebook_app_id">1972604729664633</string>
+    <string name="eventnname">Name</string>
+    <string name="venue">Venue:</string>
+    <string name="adress">Address:</string>
+    <string name="startTime">Begin time:</string>
+    <string name="endTime">End time:</string>
+    <string name="eventImg">Image of the event</string>
+    <string name="address">Address:</string>
 </resources>

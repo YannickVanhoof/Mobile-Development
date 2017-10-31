@@ -76,8 +76,7 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 HashMap<String, String> map = (HashMap<String, String>) mHomeAdapter.getItem(position);
 
-                Log.d("tiepe" , map.get("type"));
-                Intent intent = new Intent(getActivity(), EventsActivity.class)
+            Intent intent = new Intent(getActivity(), EventsActivity.class)
                         .putExtra("Type", map.get("type"));
                 startActivity(intent);
 
