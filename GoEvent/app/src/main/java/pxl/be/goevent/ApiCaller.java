@@ -41,7 +41,11 @@ public class ApiCaller extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
         String url = params[0];
         String method = params[1];
-        String data = params[2];
+        String data ="";
+        if (params.length >2){
+            data = params[2];
+        }
+
         if (Objects.equals(method.toUpperCase(), "POST")){
             String result =postData(url , data);
             Log.d("aaaaa" , result);

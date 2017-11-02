@@ -54,22 +54,19 @@ public class JsonParser {
                 result.setEndTime(endTime);
                 result.setStartTime(time);
             } catch (ParseException e1) {
-                Log.d("DATUM" , e1.getMessage() +"");
-                e1.printStackTrace();
+                 e1.printStackTrace();
             }
             //result.setDate((Date) e.get("Date"));
             result.setDescription(e.getString("Description"));
-            result.setEndTime(null);
             result.setHouseNumber(e.getInt("houseNumber"));
             result.setId(e.getInt("Id"));
             result.setLatitude(e.getDouble("Latitude"));
             result.setLongitude(e.getDouble("Longitude"));
             result.setName(e.getString("Name"));
-            result.setOrganisator(null);
             result.setStreet(e.getString("Street"));
             result.setVenue(e.getString("Venue"));
             result.setPostalCode(e.getInt("PostalCode"));
-            result.setCategory(e.getString("Category"));
+            result.setCategory(e.getString("Type"));
             results[i] = result;
         }
         Log.d("Parse" , "succes");
@@ -106,7 +103,7 @@ public class JsonParser {
             result.setStreet(event.getString("Street"));
             result.setVenue(event.getString("Venue"));
             result.setPostalCode(event.getInt("PostalCode"));
-            result.setCategory(event.getString("Category"));
+            result.setCategory(event.getString("Type"));
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");

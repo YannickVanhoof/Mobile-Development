@@ -41,7 +41,7 @@ public class EventFragment extends Fragment {
         List<String> events =null;
         ApiCaller caller = new ApiCaller();
         try {
-            String json = caller.execute("http://goevent.azurewebsites.net/api/Event").get();
+            String json = caller.execute("http://goevent.azurewebsites.net/api/Event" ,"GET").get();
             JsonParser parser = new JsonParser();
             Event[] eventsFromJson = parser.JsonToEventArray(json);
 

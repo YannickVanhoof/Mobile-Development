@@ -9,34 +9,37 @@ import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 
-public class HomeActivity extends AppCompatActivity {
+/**
+ * Created by 11500046 on 2/11/2017.
+ */
 
+public class MyEventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_home, new HomeFragment())
-                    .commit();
-        }
+        setContentView(R.layout.activity_events);
+        MyEventsFragment fragment = new MyEventsFragment();
+        //fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container_event, fragment)
+                .commit();
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home, menu);
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.map:
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
             case R.id.myevents:
-                startActivity(new Intent(this, MyEventsActivity.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));

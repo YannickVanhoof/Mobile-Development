@@ -41,7 +41,7 @@ public class EventsActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
             case R.id.myevents:
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, MyEventsActivity.class));
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));

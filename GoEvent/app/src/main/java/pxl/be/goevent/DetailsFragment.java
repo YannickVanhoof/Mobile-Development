@@ -26,12 +26,16 @@ public class DetailsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstances){
         View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
         String id = getArguments().getString("EventId");
+
         ApiCaller caller = new ApiCaller();
         try {
-            String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id).get();
+            String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id , "GET").get();
+            Log.d("json detail" , json);
             JsonParser parser = new JsonParser();
             Event event = parser.JsonToEvent(json);
             TextView name = rootView.findViewById(R.id.eventname);
+            Log.d("NAAM" , name +"");
+            Log.d("NAAM" , event.getName() +"");
             name.setText(event.getName());
             TextView description = rootView.findViewById(R.id.description);
             description.setText(event.getDescription());
