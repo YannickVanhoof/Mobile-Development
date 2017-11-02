@@ -1,6 +1,10 @@
 package pxl.be.goevent;
 
+import android.util.Log;
+
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +22,8 @@ public class Event {
     private int postalCode;
     private String Venue;
     private Date date;
-    private Time startTime;
-    private Time endTime;
+    private Date startTime;
+    private Date endTime;
     private String description;
     private AppUser organisator;
     private List<AppUser> attendees;
@@ -30,7 +34,7 @@ public class Event {
     public Event(){
 
     }
-    public Event(int id, String name, String street, int houseNumber, String city, int postalCode, String venue, Date date, Time startTime, Time endTime, String description, AppUser organisator, List<AppUser> attendees, byte[] coverPhoto, double longitude, double latitude , String category) {
+    public Event(int id, String name, String street, int houseNumber, String city, int postalCode, String venue, Date date, Date startTime, Date endTime, String description, AppUser organisator, List<AppUser> attendees, byte[] coverPhoto, double longitude, double latitude , String category) {
         this.id = id;
         this.name = name;
         Street = street;
@@ -106,27 +110,37 @@ public class Event {
         Venue = venue;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDateAsString() {
+
+        SimpleDateFormat format;
+        format = new SimpleDateFormat("dd/MM/yyyy");
+        String formatdate = format.format(date);
+        return formatdate;
     }
 
     public void setDate(Date date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        SimpleDateFormat format;
+        format = new SimpleDateFormat("HH:mm");
+        String formatTime = format.format(startTime);
+        return formatTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        SimpleDateFormat format;
+        format = new SimpleDateFormat("HH:mm");
+        String formatTime = format.format(endTime);
+        return formatTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

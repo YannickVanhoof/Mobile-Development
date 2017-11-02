@@ -44,11 +44,12 @@ public class EventFragment extends Fragment {
             String json = caller.execute("http://goevent.azurewebsites.net/api/Event").get();
             JsonParser parser = new JsonParser();
             Event[] eventsFromJson = parser.JsonToEventArray(json);
+
             filteredList = filterEventArrayByCategory(type,eventsFromJson);
             String[] data = new String[filteredList.size()];
 
             for (int i = 0; i < filteredList.size(); i++) {
-                data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDate();
+                data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDateAsString();
 
             }
             events = new ArrayList<>(Arrays.asList(data));

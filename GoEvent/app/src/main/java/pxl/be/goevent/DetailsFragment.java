@@ -40,11 +40,14 @@ public class DetailsFragment extends Fragment{
             TextView address = rootView.findViewById(R.id.address);
             address.setText(event.getAddress());
             TextView date = rootView.findViewById(R.id.date);
-            date.setText(event.getDate() +"");
+            date.setText(event.getDateAsString());
             TextView start = rootView.findViewById(R.id.startTime);
-            start.setText(event.getStartTime() +"");
+            start.setText(event.getStartTime());
             TextView end = rootView.findViewById(R.id.endTime);
-            end.setText(event.getStartTime() +"");
+            end.setText(event.getEndTime());
+            Log.d("iets" , event.getOrganisator() +"");
+            Log.d("iets" , event.getAttendees() +"");
+
 
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();

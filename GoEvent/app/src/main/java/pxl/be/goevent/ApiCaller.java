@@ -1,16 +1,26 @@
 package pxl.be.goevent;
 
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.util.Log;
 
 import org.w3c.dom.Document;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,27 +34,85 @@ import javax.xml.transform.stream.StreamResult;
  * Created by 11500046 on 17/10/2017.
  */
 
-public class ApiCaller extends AsyncTask<String, Void, String> {
+public class ApiCaller extends AsyncTask<String, String, String> {
 
 
     @Override
-    protected String doInBackground(String... urls) {
+    protected String doInBackground(String... params) {
+        String url = params[0];
+        String method = params[1];
+        String data = params[2];
+        if (Objects.equals(method.toUpperCase(), "POST")){
+            String result =postData(url , data);
+            Log.d("aaaaa" , result);
+            return result;
+        }
+        if (Objects.equals(method.toUpperCase() , "GET")) {
+            return getData(url);
+        }
+        return "";
+    }
+
+
+    private String postData(String urlstring, String data) {
+        HttpURLConnection connection;
+        OutputStreamWriter request = null;
+
+        URL url = null;
+        String response = null;
+        //StrictMode.ThreadPolicy policy = new
+        //StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
+        try {
+
+            Log.d("aaaaa" , "POST DATA");
+            url = new URL(urlstring);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestMethod("POST");
+            request = new OutputStreamWriter(connection.getOutputStream());
+            request.write(data);
+            request.flush();
+            request.close();
+            String line = "";
+            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            // Response from server after login process will be stored in response variable.
+            response = sb.toString();
+            isr.close();
+            reader.close();
+            Log.d("aaaaa" , "finished" + response);
+            return response;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            Log.d("aaaaa" , "error");
+            return e.getMessage();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            Log.d("aaaaa" , "error");
+            return e.getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("aaaaa" , "error");
+            return e.getMessage();
+        }
+
+    }
+
+    private String getData(String u){
         URLConnection urlConnection;
         BufferedReader reader;
         String json;
-            try {
-            //Create URL
-            // URL url = new URL("http:/10.0.2.2:61015/api/event");
-            URL url = new URL(urls[0]);
-            Log.d("url", url.toString());
+        try {
+            URL url = new URL(u);
             //Create request and open connection
             urlConnection = url.openConnection();
-//            urlConnection.setRequestMethod("GET");
-//            urlConnection.connect();
-            Log.d("apicaller", "connection");
-            Log.d("apicaller", urlConnection.getContentLength() + "");
             //Read input
-            Log.e("APICALLER", urlConnection.getContent().toString());
             InputStream inputStream = urlConnection.getInputStream();
             StringBuilder builder = new StringBuilder();
             if (inputStream == null){
@@ -57,57 +125,14 @@ public class ApiCaller extends AsyncTask<String, Void, String> {
                 builder.append(line).append("\n");
             }
             if (builder.length() == 0){
-                Log.d("APICaller" , "Empty");
                 return "Empty";
             }
             json = builder.toString();
-            Log.d("APICaller" , json);
             return json;
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            Log.d("APICaller exception", ex.getMessage());
-
             return ex.getMessage();
-        }
-    }
-
-    private void xmlTesting() {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = null;
-
-
-        try {
-            dBuilder = factory.newDocumentBuilder();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            String url = "https://api.met.no/weatherapi/locationforecast/1.9/?lat=50&lon=5";
-            URL link = new URL(url);
-            URLConnection connection = link.openConnection();
-            InputStream source = connection.getInputStream();
-            Document parsed = dBuilder.parse(source);
-
-
-            try {
-                DOMSource domSource = new DOMSource(parsed);
-                StringWriter writer = new StringWriter();
-                StreamResult result = new StreamResult(writer);
-                TransformerFactory tf = TransformerFactory.newInstance();
-                Transformer transformer = tf.newTransformer();
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.transform(domSource, result);
-                Log.e("XMLTEST", writer.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
