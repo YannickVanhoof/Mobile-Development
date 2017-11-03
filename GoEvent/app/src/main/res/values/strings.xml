@@ -33,4 +33,6 @@
     <string name="endTime">End time:</string>
     <string name="eventImg">Image of the event</string>
     <string name="address">Address:</string>
+    <string name="goTo">I\'m going</string>
+    <string name="alreadGoing">Going</string>
 </resources>

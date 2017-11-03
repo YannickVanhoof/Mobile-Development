@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -19,23 +20,22 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class DetailsFragment extends Fragment{
+    private Event event;
     public DetailsFragment(){
 
     }
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstances){
-        View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
+        final View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
         String id = getArguments().getString("EventId");
 
         ApiCaller caller = new ApiCaller();
         try {
-            String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id , "GET").get();
+           String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id , "GET").get();
             Log.d("json detail" , json);
             JsonParser parser = new JsonParser();
-            Event event = parser.JsonToEvent(json);
+            event = parser.JsonToEvent(json);
             TextView name = rootView.findViewById(R.id.eventname);
-            Log.d("NAAM" , name +"");
-            Log.d("NAAM" , event.getName() +"");
             name.setText(event.getName());
             TextView description = rootView.findViewById(R.id.description);
             description.setText(event.getDescription());
@@ -51,11 +51,39 @@ public class DetailsFragment extends Fragment{
             end.setText(event.getEndTime());
             Log.d("iets" , event.getOrganisator() +"");
             Log.d("iets" , event.getAttendees() +"");
+            final Button button = rootView.findViewById(R.id.going);
+            button.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    AddUserToAttendees();
+                    button.setVisibility(View.INVISIBLE);
+                    rootView.findViewById(R.id.alreadyGoing).setVisibility(View.VISIBLE);
+
+                }
+            });
 
 
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
         return rootView;
+    }
+    private void AddUserToAttendees(){
+        ApiCaller caller = new ApiCaller();
+        try {
+
+            String user = caller.execute("http://goevent.azurewebsites.net/api/User/1" , "GET").get();
+            caller = new ApiCaller();
+            String result = caller.execute("http://goevent.azurewebsites.net/api/Event/"+  event.getId() +"/addUser" , "POST" ,user).get();
+
+
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

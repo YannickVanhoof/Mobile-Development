@@ -109,7 +109,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </TableRow>
-
+        <TableRow>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goTo"
+                android:id="@+id/going"/>
+            <TextView
+                android:id="@+id/alreadyGoing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="@string/alreadGoing"/>
+        </TableRow>
     </TableLayout>
 
 
