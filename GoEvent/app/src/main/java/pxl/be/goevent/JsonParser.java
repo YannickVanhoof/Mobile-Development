@@ -42,7 +42,13 @@ public class JsonParser {
 
 
             String organisator = e.getString("Organisator");
-            result.setOrganisator(JsonToAppUser(organisator));
+            Log.d("ORGANISATOR" , organisator);
+            if (organisator.equals("null")){
+                result.setOrganisator(null);
+            }else {
+                result.setOrganisator(JsonToAppUser(organisator));
+            }
+
 
 
             try {
@@ -165,6 +171,10 @@ public class JsonParser {
     public String AppUserToJson(AppUser user){
        Gson gson =  new Gson();
         return gson.toJson(user);
+    }
+    public String EventToJson(Event event){
+        Gson gson = new Gson();
+        return gson.toJson(event);
     }
 }
 

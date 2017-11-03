@@ -30,7 +30,7 @@ public class Event {
     private byte[] coverPhoto;
     private double longitude;
     private double latitude;
-    private String category;
+    private String type;
     public Event(){
 
     }
@@ -51,7 +51,7 @@ public class Event {
         this.coverPhoto = coverPhoto;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.category = category;
+        this.type = category;
     }
 
     public int getId() {
@@ -110,6 +110,10 @@ public class Event {
         Venue = venue;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
     public String getDateAsString() {
 
         SimpleDateFormat format;
@@ -121,6 +125,8 @@ public class Event {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public Date getStart() {return startTime;}
 
     public String getStartTime() {
         SimpleDateFormat format;
@@ -138,6 +144,10 @@ public class Event {
         format = new SimpleDateFormat("HH:mm");
         String formatTime = format.format(endTime);
         return formatTime;
+    }
+
+    public Date getEnd() {
+        return endTime;
     }
 
     public void setEndTime(Date endTime) {
@@ -193,11 +203,11 @@ public class Event {
     }
 
     public String getCategory() {
-        return category;
+        return type;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.type = category;
     }
 
     @Override
@@ -219,7 +229,7 @@ public class Event {
                 ", coverPhoto=" + Arrays.toString(coverPhoto) +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
-                ", category='" + category + '\'' +
+                ", category='" + type + '\'' +
                 '}';
     }
 

@@ -48,7 +48,6 @@ public class ApiCaller extends AsyncTask<String, String, String> {
 
         if (Objects.equals(method.toUpperCase(), "POST")){
             String result =postData(url , data);
-            Log.d("aaaaa" , result);
             return result;
         }
         if (Objects.equals(method.toUpperCase() , "GET")) {
@@ -90,19 +89,17 @@ public class ApiCaller extends AsyncTask<String, String, String> {
             response = sb.toString();
             isr.close();
             reader.close();
-            Log.d("aaaaa" , "finished" + response);
+
             return response;
         } catch (ProtocolException e) {
             e.printStackTrace();
-            Log.d("aaaaa" , "error");
             return e.getMessage();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            Log.d("aaaaa" , "error");
+
             return e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("aaaaa" , "error");
             return e.getMessage();
         }
 

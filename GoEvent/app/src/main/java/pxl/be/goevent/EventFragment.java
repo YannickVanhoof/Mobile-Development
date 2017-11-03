@@ -90,7 +90,7 @@ public class EventFragment extends Fragment {
 
     private List<Event> filterEventArrayByCategory(String category , Event[] events){
         List<Event>filtered = new ArrayList<>();
-        Log.d("bf filter events" , events.length +"");
+
         for (Event event:events) {
 
            if (Objects.equals(event.getCategory(), category)){

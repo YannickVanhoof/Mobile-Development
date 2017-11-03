@@ -56,6 +56,9 @@ public class DetailActivity extends AppCompatActivity {
                 LoginManager.getInstance().logOut();
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
+            case R.id.addEvent:
+                startActivity(new Intent(this, AddEventActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

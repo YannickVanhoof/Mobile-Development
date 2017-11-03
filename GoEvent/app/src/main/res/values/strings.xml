@@ -11,6 +11,7 @@
     <string name="app_name">GoEvent</string>
     <string name="myevents">My Events</string>
     <string name="logout">Logout</string>
+    <string name="addEvent">Add Event</string>
     // Detail
     <string name="description">Description</string>
     <string name="location">Location</string>
