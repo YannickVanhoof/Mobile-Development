@@ -43,7 +43,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     private Button addButton;
 
-    private EditText id, name, street, housenumber, city, postcode, category, date, start, end, description;
+    private EditText id, name, street, housenumber, city, postcode, date, start, end, description;
 
     private Spinner spinner;
 
@@ -76,8 +76,6 @@ public class AddEventActivity extends AppCompatActivity {
                 try {
                     e = createEvent();
                     String json = new JsonParser().EventToJson(e);
-                   // ApiPost apiPost = new ApiPost();
-                   // apiPost.execute("http://goevent.azurewebsites.net/api/Event", json);
                     ApiCaller caller = new ApiCaller();
                     try {
                         String result = caller.execute("http://goevent.azurewebsites.net/api/Event" , "POST" , json).get();
@@ -92,6 +90,9 @@ public class AddEventActivity extends AppCompatActivity {
                     e1.printStackTrace();
                     Log.d("error" , e1.getMessage());
                 }
+                Intent myIntent = new Intent(AddEventActivity.this, EventsActivity.class)
+                        .putExtra("Type", e.getCategory());
+                startActivity(myIntent);
             }
         });
     }
@@ -132,7 +133,6 @@ public class AddEventActivity extends AppCompatActivity {
         event.setHouseNumber(Integer.parseInt(housenumber.getText().toString()));
         event.setCity(city.getText().toString());
         event.setPostalCode(Integer.parseInt(postcode.getText().toString()));
-        //Log.d("category" , category.getText().toString());
         event.setCategory(String.valueOf(spinner.getSelectedItem()));
         event.setDate(createDate(date.getText().toString()));
         event.setStartTime(createTime(start.getText().toString()));
@@ -193,33 +193,5 @@ public class AddEventActivity extends AppCompatActivity {
         spinner.setAdapter(dataAdapter);
 
     }
-
-/*    private String createJson(Event e) throws JSONException {
-        JSONObject json = new JSONObject();
-        json.accumulate("Id", e.getId());
-        json.accumulate("Name", e.getName());
-        json.accumulate("Street", e.getStreet());
-        json.accumulate("houseNumber", e.getHouseNumber());
-        json.accumulate("City", e.getCity());
-        json.accumulate("PostalCode", e.getPostalCode());
-        json.accumulate("Venue", e.getVenue());
-        json.accumulate("Type,",e.getCategory());
-        json.accumulate("Date", getDateAsJson(e.getDate()));
-        json.accumulate("StartTime", getDateAsJson(e.getStart()));
-        json.accumulate("EndTime", getDateAsJson(e.getEnd()));
-        json.accumulate("Description", e.getDescription());
-        json.accumulate("Longitude", e.getLongitude());
-        json.accumulate("Latitude", e.getLatitude());
-
-        Log.e("json", json.toString());
-
-        return json.toString();
-    }
-
-    public String getDateAsJson(Date date) {
-        SimpleDateFormat format;
-        format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        return format.format(date);
-    }*/
 }
 

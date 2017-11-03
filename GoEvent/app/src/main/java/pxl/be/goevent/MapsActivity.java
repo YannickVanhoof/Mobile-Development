@@ -122,7 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ApiCaller caller = new ApiCaller();
         try {
-            String json = caller.execute("http://goevent.azurewebsites.net/api/Event").get();
+            String json = caller.execute("http://goevent.azurewebsites.net/api/Event", "GET").get();
             JsonParser parser = new JsonParser();
             Event[] events = parser.JsonToEventArray(json);
 
