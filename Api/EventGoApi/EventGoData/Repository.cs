@@ -214,6 +214,11 @@ namespace EventGoData
         {
             return users.Find(u => u.Id == id);
         }
+
+        public User GetUserByName(string username)
+        {
+            return users.Find(u => u.UserName == username);
+        }
         
         public List<Event> GetAllEvents()
         {

@@ -6,3 +6,11 @@ C:\Users\11500046\Documents\School\3e jaar\Mobile Development\Project\API\EventG
 C:\Users\11500046\Documents\School\3e jaar\Mobile Development\Project\API\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.dll
 C:\Users\11500046\Documents\School\3e jaar\Mobile Development\Project\API\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.pdb
 C:\Users\11500046\Documents\School\3e jaar\Mobile Development\Project\API\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.csprojResolveAssemblyReference.cache
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\bin\Debug\netstandard1.4\EventGoData.deps.json
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\bin\Debug\netstandard1.4\EventGoData.dll
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\bin\Debug\netstandard1.4\EventGoData.pdb
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.csproj.CoreCompileInputs.cache
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.AssemblyInfoInputs.cache
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.AssemblyInfo.cs
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.dll
+C:\Users\Windows\Documents\GitHub\Mobile-Development\Api\EventGoApi\EventGoData\obj\Debug\netstandard1.4\EventGoData.pdb
