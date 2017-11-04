@@ -57,31 +57,47 @@ public class MainActivity extends AppCompatActivity {
         String username = pref.getString(PREF_USERNAME, null);
         String password = pref.getString(PREF_PASSWORD, null);
 
-        EditText usernameEditText = (EditText)findViewById(R.id.name_editText);
-        usernameEditText.setText(username);
+        nameEditText.setText(username);
         passwordEditText.setText(password);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameEditText.getText().toString().equals("admin") &&
-                        passwordEditText.getText().toString().equals("admin")) {
-                    Toast.makeText(getApplicationContext(),
-                            "Redirecting...",Toast.LENGTH_SHORT).show();
+                String result = null;
+                try {
+                    result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+nameEditText.getText(), "GET").get();
+                    Log.d("result", result);
+                    if(result.startsWith("{")) {
+                        Log.e("string not empty", "not null");
+                        AppUser user = new JsonParser().JsonToAppUser(result);
 
-                    // Save username and password
-                    getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-                            .edit()
-                            .putString(PREF_USERNAME, nameEditText.getText().toString())
-                            .putString(PREF_PASSWORD, passwordEditText.getText().toString())
-                            .commit();
+                        if(passwordEditText.getText().toString().equals(user.getPassword())) {
+                            Toast.makeText(getApplicationContext(), "Redirecting...",Toast.LENGTH_SHORT).show();
 
-                    //Start your second activity
-                    //Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    //startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                            // Save username and password
+                            getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+                                    .edit()
+                                    .putString(PREF_USERNAME, nameEditText.getText().toString())
+                                    .putString(PREF_PASSWORD, passwordEditText.getText().toString())
+                                    .apply();
+
+                            //Start your second activity
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -116,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onCompleted(JSONObject object, GraphResponse response) {
                     Intent intent= createRegisterIntent(object);
                     startActivity(intent);
+                        finish();
                     }
                 });
                 Bundle parameters = new Bundle();

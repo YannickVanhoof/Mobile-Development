@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"/>
     <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/userName"/>
     <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/userName"
-        android:inputType="text" c/>
+        android:inputType="text" />
     <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/userPassword"/>
     <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/password"
         android:inputType="textVisiblePassword" />
