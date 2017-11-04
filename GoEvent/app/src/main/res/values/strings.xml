@@ -35,4 +35,13 @@
     <string name="address">Address:</string>
     <string name="goTo">I\'m going</string>
     <string name="alreadGoing">Going</string>
+    <string name="userName">Username</string>
+    <string name="userPassword">Password</string>
+    <string name="email">Email</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="City">City</string>
+    <string name="Address">Address</string>
+    <string name="PostalCode">Postal code</string>
+    <string name="Register">Register</string>
 </resources>

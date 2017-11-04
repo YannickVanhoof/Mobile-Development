@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         usernameEditText.setText(username);
         passwordEditText.setText(password);
 
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
 
                     //Start your second activity
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    //startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
                 }
@@ -90,7 +92,14 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        Button registerButton = (Button) findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this , RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
         errortextview = (TextView) findViewById(R.id.error);
         fbLoginButton = (LoginButton)findViewById(R.id.fb_login_button);
         callbackManager = CallbackManager.Factory.create();
@@ -98,37 +107,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
+
                 Toast.makeText(getApplicationContext(),
                         "Redirecting...",Toast.LENGTH_SHORT).show();
-                              //Start your second activity
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Get facebook data from login
-                        Bundle bFacebookData = getFacebookData(object);
-                        AppUser user = new AppUser();
-                        user.setUserName(bFacebookData.getString("first_name") +" "+bFacebookData.getString("last_name"));
-                        user.setLastName(bFacebookData.getString("last_name"));
-                        user.setEmail(bFacebookData.getString("email"));
-                        ApiCaller caller = new ApiCaller();
-                        String json = new JsonParser().AppUserToJson(user);
-                        Log.d("UER" , user.toString());
-                        try {
-                            String result = caller.execute("http://goevent.azurewebsites.net/api/Users" , "POST" , json).get();
-                        } catch (InterruptedException | ExecutionException e) {
-                            Log.d("RESULT PEOPLE" , e.getMessage());
-                            e.printStackTrace();
-                        }
+                    Intent intent= createRegisterIntent(object);
+                    startActivity(intent);
                     }
                 });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
+                parameters.putString("fields", "id, first_name, last_name"); // Parámetros que pedimos a facebook
                 request.setParameters(parameters);
                 request.executeAsync();
 
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
             }
 
             @Override
@@ -167,22 +161,40 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString("idFacebook", id);
             if (object.has("first_name"))
                 bundle.putString("first_name", object.getString("first_name"));
+
             if (object.has("last_name"))
                 bundle.putString("last_name", object.getString("last_name"));
-            if (object.has("email"))
-                bundle.putString("email", object.getString("email"));
-            if (object.has("gender"))
-                bundle.putString("gender", object.getString("gender"));
-            if (object.has("birthday"))
-                bundle.putString("birthday", object.getString("birthday"));
-            if (object.has("location"))
-                bundle.putString("location", object.getJSONObject("location").getString("name"));
 
             return bundle;
         }
         catch(JSONException e) {
-            Log.d("TAG","Error parsing JSON");
+            e.printStackTrace();
+            Log.d("FB", e.getMessage());
         }
         return null;
+    }
+    private Intent createRegisterIntent(JSONObject object){
+        // Get facebook data from login
+        Bundle bFacebookData = getFacebookData(object);
+        String userName = bFacebookData.getString("first_name")+""+bFacebookData.getString("last_name");
+        String lastName = bFacebookData.getString("last_name");
+        String firstName = bFacebookData.getString("first_name");
+        if(IfExist(userName)){
+            return new Intent(this, HomeActivity.class);
+        }
+        Intent intent = new Intent(MainActivity.this , RegisterActivity.class);
+        intent.putExtra("last_name" , lastName).putExtra("user_name" , userName).putExtra("first_name" , firstName);
+       return intent;
+    }
+    private boolean IfExist(String userName){
+        try {
+            String result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+userName, "GET").get();
+            AppUser u = new JsonParser().JsonToAppUser(result);
+            return Objects.equals(userName, u.getUserName());
+        } catch (InterruptedException | JSONException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

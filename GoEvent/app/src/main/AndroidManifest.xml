@@ -34,6 +34,7 @@
         <activity android:name=".EventsActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".MyEventsActivity" />
+        <activity android:name=".RegisterActivity"/>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />

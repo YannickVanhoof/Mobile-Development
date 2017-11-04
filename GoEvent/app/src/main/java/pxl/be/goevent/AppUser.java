@@ -1,5 +1,6 @@
 package pxl.be.goevent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ public class AppUser {
     private List<Event> events;
 
     public AppUser() {
+        OrganisedEvents = new ArrayList<>() ;
+        events = new ArrayList<>();
     }
 
     public AppUser(int id, String userName, String password, String email, String firstname, String lastName, String address, String city, int postalCode, List<Event> organisedEvents, List<Event> events) {
