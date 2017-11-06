@@ -44,4 +44,5 @@
     <string name="Address">Address</string>
     <string name="PostalCode">Postal code</string>
     <string name="Register">Register</string>
+    <string name="attendees">Who\'s going?</string>
 </resources>

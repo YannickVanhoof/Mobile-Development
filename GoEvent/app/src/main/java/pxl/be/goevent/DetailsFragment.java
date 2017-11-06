@@ -7,12 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -49,8 +53,21 @@ public class DetailsFragment extends Fragment{
             start.setText(event.getStartTime());
             TextView end = rootView.findViewById(R.id.endTime);
             end.setText(event.getEndTime());
-            Log.d("iets" , event.getOrganisator() +"");
-            Log.d("iets" , event.getAttendees() +"");
+            //Log.d("iets" , event.getOrganisator() +"");
+            List<String>users = new ArrayList<>();
+            if(event.getAttendees() == null){
+                users.add("No one is going");
+            }else {
+            for (AppUser user: event.getAttendees()) {
+                users.add(user.getFirstname() +" " + user.getLastName());
+            }}
+            ArrayAdapter<String> userAdapter = new ArrayAdapter<>(
+                            getActivity(), // The current context (this activity)
+                            R.layout.list_item_user, // The name of the layout ID.
+                            R.id.list_item_user_textview, // The ID of the textview to populate.
+                            users);
+            ListView attendees = rootView.findViewById(R.id.attendees);
+            attendees.setAdapter(userAdapter);
             final Button button = rootView.findViewById(R.id.going);
             button.setOnClickListener(new View.OnClickListener(){
 

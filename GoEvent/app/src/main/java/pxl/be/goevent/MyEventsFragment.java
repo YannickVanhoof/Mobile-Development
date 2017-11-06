@@ -64,7 +64,7 @@ public class MyEventsFragment  extends Fragment{
                         Intent intent = new Intent(getActivity(), DetailActivity.class)
                                 .putExtra(Intent.EXTRA_TEXT, detail)
                                 .putExtra("EventId" , events[position].getId() +"");
-                        Log.d("aaa" , events[position].getId() +"");
+
                         startActivity(intent);
                     }
                 });
