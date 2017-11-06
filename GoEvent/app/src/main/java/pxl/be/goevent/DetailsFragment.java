@@ -17,6 +17,7 @@ import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -25,14 +26,17 @@ import java.util.concurrent.ExecutionException;
 
 public class DetailsFragment extends Fragment{
     private Event event;
+    private String logedInUserName;
+
     public DetailsFragment(){
 
     }
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstances){
+
         final View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
         String id = getArguments().getString("EventId");
-
+        logedInUserName = getArguments().getString("Username");
         ApiCaller caller = new ApiCaller();
         try {
            String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id , "GET").get();
@@ -53,12 +57,19 @@ public class DetailsFragment extends Fragment{
             start.setText(event.getStartTime());
             TextView end = rootView.findViewById(R.id.endTime);
             end.setText(event.getEndTime());
+            final Button button = rootView.findViewById(R.id.going);
             //Log.d("iets" , event.getOrganisator() +"");
             List<String>users = new ArrayList<>();
             if(event.getAttendees() == null){
                 users.add("No one is going");
             }else {
             for (AppUser user: event.getAttendees()) {
+                if (Objects.equals(user.getUserName(), logedInUserName)){
+                    Log.d("logedin" ,logedInUserName);
+                    button.setVisibility(View.INVISIBLE);
+                    TextView view = rootView.findViewById(R.id.alreadyGoing);
+                    view.setVisibility(View.VISIBLE);
+                }
                 users.add(user.getFirstname() +" " + user.getLastName());
             }}
             ArrayAdapter<String> userAdapter = new ArrayAdapter<>(
@@ -68,7 +79,7 @@ public class DetailsFragment extends Fragment{
                             users);
             ListView attendees = rootView.findViewById(R.id.attendees);
             attendees.setAdapter(userAdapter);
-            final Button button = rootView.findViewById(R.id.going);
+
             button.setOnClickListener(new View.OnClickListener(){
 
                 @Override

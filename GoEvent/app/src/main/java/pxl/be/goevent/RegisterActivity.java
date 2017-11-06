@@ -1,11 +1,13 @@
 package pxl.be.goevent;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -19,8 +21,9 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        final TextView   userNameText = findViewById(R.id.userName);
        String last_name = getIntent().getStringExtra("last_name");
-        String user_name = getIntent().getStringExtra("user_name");
+        final String user_name = getIntent().getStringExtra("user_name");
         String first_name = getIntent().getStringExtra("first_name");
         if (last_name != null){
             TextView lastNameText = findViewById(R.id.lastname);
@@ -29,7 +32,6 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
         }
         if (last_name != null && user_name != null){
             Log.d("USERNAME" , user_name);
-            TextView userNameText = findViewById(R.id.userName);
             userNameText.setEnabled(false);
             userNameText.setText(user_name);
         }
@@ -42,7 +44,16 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Register();
+                try {
+                    if (CheckIfUserNameAlreadyExist(userNameText.getText().toString())){
+                        Toast.makeText(getApplicationContext(), "Username already exist",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Register();
+                    }
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Not registered",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -56,6 +67,9 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
         String result = null;
         try {
             result = caller.execute("http://goevent.azurewebsites.net/api/User" , "POST" ,json).get();
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            intent.putExtra("Username" , user.getUserName());
+            startActivity(intent);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -83,5 +97,13 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
         user.setCity(city.getText().toString());
         user.setPostalCode(Integer.parseInt(postalCode.getText().toString()));
         return user;
+    }
+    private boolean CheckIfUserNameAlreadyExist(String username) throws ExecutionException, InterruptedException {
+        ApiCaller caller = new ApiCaller();
+        String result = caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "Get").get();
+        Log.d("aa" , username);
+        Log.d("aa" , result);
+        Log.d("result" ,(result.contains(username)) +"");
+        return result.contains(username);
     }
 }

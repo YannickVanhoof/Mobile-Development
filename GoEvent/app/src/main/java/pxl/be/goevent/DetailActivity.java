@@ -23,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
             String eventId = getIntent().getStringExtra("EventId");
             Bundle bundle = new Bundle();
             bundle.putString("EventId" , eventId);
+            bundle.putString("Username" ,"YannickVh");
             DetailsFragment fragment = new DetailsFragment();
             fragment.setArguments(bundle);
            getSupportFragmentManager().beginTransaction()

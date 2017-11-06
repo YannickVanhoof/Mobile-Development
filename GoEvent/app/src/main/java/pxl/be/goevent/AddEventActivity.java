@@ -89,6 +89,12 @@ public class AddEventActivity extends AppCompatActivity {
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                     Log.d("error" , e1.getMessage());
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                } catch (ExecutionException e1) {
+                    e1.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
                 Intent myIntent = new Intent(AddEventActivity.this, EventsActivity.class)
                         .putExtra("Type", e.getCategory());
@@ -125,7 +131,7 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
-    public Event createEvent() throws ParseException {
+    public Event createEvent() throws ParseException, ExecutionException, InterruptedException, JSONException {
         Event event = new Event();
         event.setId(Integer.parseInt(id.getText().toString()));
         event.setName(name.getText().toString());
@@ -138,9 +144,13 @@ public class AddEventActivity extends AppCompatActivity {
         event.setStartTime(createTime(start.getText().toString()));
         event.setEndTime(createTime(end.getText().toString()));
         event.setDescription(description.getText().toString());
-
+        ApiCaller caller = new ApiCaller();
+        String username = getIntent().getStringExtra("Username");
+        String result =caller.execute("goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
+        JsonParser parser = new JsonParser();
+        AppUser user = parser.JsonToAppUser(result);
+        event.setOrganisator(user);
         LatLng latlng = getLocationFromAddress(this, event.getStreet() + ", " + event.getHouseNumber() + ", " + event.getCity());
-
         event.setLongitude(latlng.longitude);
         event.setLatitude(latlng.latitude);
         return event;

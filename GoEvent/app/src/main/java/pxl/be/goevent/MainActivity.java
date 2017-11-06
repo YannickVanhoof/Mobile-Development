@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
@@ -52,10 +53,16 @@ public class MainActivity extends AppCompatActivity {
         nameEditText = (EditText)findViewById(R.id.name_editText);
         passwordEditText = (EditText)findViewById(R.id.password_editText);
         cancelButton = (Button)findViewById(R.id.cancel_button);
-
+        String username;
+        String password ="";
         SharedPreferences pref = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        String username = pref.getString(PREF_USERNAME, null);
-        String password = pref.getString(PREF_PASSWORD, null);
+        if (getIntent().getStringExtra("Username") == null){
+            username = pref.getString(PREF_USERNAME, null);
+            password = pref.getString(PREF_PASSWORD, null);
+        }else {
+             username = getIntent().getStringExtra("Username");
+
+        }
 
         nameEditText.setText(username);
         passwordEditText.setText(password);
