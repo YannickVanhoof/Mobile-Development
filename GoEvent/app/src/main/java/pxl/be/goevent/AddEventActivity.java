@@ -54,7 +54,7 @@ import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button addButton, uploadButton, chooseButton;
+    private Button addButton, chooseButton;
 
     private EditText id, name, street, housenumber, city, postcode, date, start, end, description;
 
@@ -92,10 +92,8 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         description = (EditText)findViewById(R.id.description_editText);
 
         chooseButton = (Button)findViewById(R.id.choose);
-        uploadButton = (Button)findViewById(R.id.upload);
         imageView = (ImageView) findViewById(R.id.image);
         chooseButton.setOnClickListener(this);
-        uploadButton.setOnClickListener(this);
 
 
         addButton = (Button)findViewById(R.id.addButton);
@@ -126,6 +124,9 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
+
+                uploadFile();
+
                 Intent myIntent = new Intent(AddEventActivity.this, EventsActivity.class)
                         .putExtra("Type", e.getCategory());
                 startActivity(myIntent);
@@ -157,14 +158,13 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
 
     private void uploadFile() {
         //if there is a file to upload
-        Log.e("filePath", filePath.toString());
         if (filePath != null) {
             //displaying a progress dialog while upload is going on
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
-            StorageReference riversRef = mStorageRef.child("images/pic.jpg");
+            StorageReference riversRef = mStorageRef.child("images/"+e.getName()+".jpg");
             riversRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -247,8 +247,8 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         event.setEndTime(createTime(end.getText().toString()));
         event.setDescription(description.getText().toString());
         ApiCaller caller = new ApiCaller();
-        String username = getIntent().getStringExtra("Username");
-        String result =caller.execute("goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
+        String username = "KimP";//getIntent().getStringExtra("Username");
+        String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
         JsonParser parser = new JsonParser();
         AppUser user = parser.JsonToAppUser(result);
         event.setOrganisator(user);
@@ -310,9 +310,6 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if (view == chooseButton) {
             showFileChooser();
-        } else if (view == uploadButton) {
-            Log.e("filePath", filePath.toString());
-            uploadFile();
         }
     }
 }

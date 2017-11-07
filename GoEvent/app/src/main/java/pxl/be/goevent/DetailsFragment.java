@@ -1,6 +1,10 @@
 package pxl.be.goevent;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,16 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.w3c.dom.Document;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by 11500046 on 31/10/2017.
@@ -26,6 +43,7 @@ import java.util.concurrent.ExecutionException;
 
 public class DetailsFragment extends Fragment{
     private Event event;
+    private StorageReference mStorageRef;
     private String logedInUserName;
 
     public DetailsFragment(){
@@ -33,7 +51,6 @@ public class DetailsFragment extends Fragment{
     }
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstances){
-
         final View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
         String id = getArguments().getString("EventId");
         logedInUserName = getArguments().getString("Username");
@@ -57,6 +74,20 @@ public class DetailsFragment extends Fragment{
             start.setText(event.getStartTime());
             TextView end = rootView.findViewById(R.id.endTime);
             end.setText(event.getEndTime());
+
+            // add image
+            final ImageView imageView;
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReference();
+                imageView = rootView.findViewById(R.id.detail_image);
+
+            storageReference.child("images/"+event.getName()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getApplicationContext()).load(uri.toString()).into(imageView);
+                }
+            });
+
             final Button button = rootView.findViewById(R.id.going);
             //Log.d("iets" , event.getOrganisator() +"");
             List<String>users = new ArrayList<>();
