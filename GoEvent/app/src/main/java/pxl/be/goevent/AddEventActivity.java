@@ -43,7 +43,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     private Button addButton;
 
-    private EditText id, name, street, housenumber, city, postcode, date, start, end, description;
+    private EditText id, name, street, housenumber, city, postcode, date, start, end, description , venue;
 
     private Spinner spinner;
 
@@ -67,7 +67,7 @@ public class AddEventActivity extends AppCompatActivity {
         start = (EditText)findViewById(R.id.startTime_editText);
         end = (EditText)findViewById(R.id.endTime_editText);
         description = (EditText)findViewById(R.id.description_editText);
-
+        venue = (EditText)findViewById(R.id.venue_editText);
         addButton = (Button)findViewById(R.id.addButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +79,10 @@ public class AddEventActivity extends AppCompatActivity {
                     ApiCaller caller = new ApiCaller();
                     try {
                         String result = caller.execute("http://goevent.azurewebsites.net/api/Event" , "POST" , json).get();
-                        Log.d("result" , result);
+                        String id = e.getId() +"";
+                        Intent myIntent = new Intent(AddEventActivity.this, DetailActivity.class)
+                                .putExtra("EventId" ,id);
+                        startActivity(myIntent);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     } catch (ExecutionException e1) {
@@ -96,9 +99,7 @@ public class AddEventActivity extends AppCompatActivity {
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
-                Intent myIntent = new Intent(AddEventActivity.this, EventsActivity.class)
-                        .putExtra("Type", e.getCategory());
-                startActivity(myIntent);
+
             }
         });
     }
@@ -146,13 +147,16 @@ public class AddEventActivity extends AppCompatActivity {
         event.setDescription(description.getText().toString());
         ApiCaller caller = new ApiCaller();
         String username = getIntent().getStringExtra("Username");
-        String result =caller.execute("goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
+        Log.d("username" , username +"");
+        String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
         JsonParser parser = new JsonParser();
+        Log.d("result user"  , result +"") ;
         AppUser user = parser.JsonToAppUser(result);
         event.setOrganisator(user);
         LatLng latlng = getLocationFromAddress(this, event.getStreet() + ", " + event.getHouseNumber() + ", " + event.getCity());
         event.setLongitude(latlng.longitude);
         event.setLatitude(latlng.latitude);
+        event.setVenue(venue.getText().toString());
         return event;
     }
 

@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.addEvent:
-                startActivity(new Intent(this, AddEventActivity.class));
+                startActivity(new Intent(this, AddEventActivity.class).putExtra("Username" , "YannickVh"));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

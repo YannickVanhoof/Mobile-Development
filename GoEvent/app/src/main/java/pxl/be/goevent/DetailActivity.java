@@ -21,6 +21,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             String eventId = getIntent().getStringExtra("EventId");
+            Log.d("result 6" ,eventId +"");
             Bundle bundle = new Bundle();
             bundle.putString("EventId" , eventId);
             bundle.putString("Username" ,"YannickVh");
