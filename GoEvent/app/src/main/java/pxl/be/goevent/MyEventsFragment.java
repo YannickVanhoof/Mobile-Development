@@ -103,25 +103,46 @@ public class MyEventsFragment  extends Fragment{
             json = caller.execute("http://goevent.azurewebsites.net/Api/User/"+userid+"/Events" ,"GET").get();
             Log.d("USER" ,json);
             JsonParser parser = new JsonParser();
+            String[] name;
+            String[] date;
             try {
                 final Event[] events = parser.JsonToEventArray(json);
-                List<String> eventList = new ArrayList<>();
+                name = new String[events.length];
+                date = new String[events.length];
                 if (events != null || events.length > 0){
 
-                    for (Event e : events){
-                        eventList.add(e.getName() + " Date: " + e.getDateAsString());
+                    for (int i = 0; i < events.length; i++) {
+                        name[i] = events[i].getName();
+                        date[i] = events[i].getDateAsString();
                     }
                 }
-                mEventAdapter =
+                /*mEventAdapter =
                         new ArrayAdapter<>(
                                 getActivity(), // The current context (this activity)
                                 R.layout.list_item_event, // The name of the layout ID.
                                 R.id.list_item_event_textview, // The ID of the textview to populate.
-                                eventList);
-
+                                eventList);*/
+                final CustonListAdapter adapter = new CustonListAdapter(getActivity(), name, date);
                 View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
+                // Get a reference to the ListView, and attach this adapter to it.
                 ListView listView = (ListView) rootView.findViewById(R.id.listview_event);
+                //listView.setAdapter(mEventAdapter);
+                listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                        String detail = adapter.getItem(position);
+                        Intent intent = new Intent(getActivity(), DetailActivity.class)
+                                .putExtra(Intent.EXTRA_TEXT, detail)
+                                .putExtra("EventId" , events[position].getId() +"");
+                        startActivity(intent);
+                    }
+
+                /*ListView listView = (ListView) rootView.findViewById(R.id.listview_event);
                 listView.setAdapter(mEventAdapter);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -135,7 +156,7 @@ public class MyEventsFragment  extends Fragment{
                                 .putExtra("EventId" , events[position].getId() +"");
 
                         startActivity(intent);
-                    }
+                    }*/
                 });
 
                 return rootView;

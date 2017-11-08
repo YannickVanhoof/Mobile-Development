@@ -44,7 +44,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailsFragment extends Fragment{
     private Event event;
-    private StorageReference mStorageRef;
+    //private StorageReference mStorageRef;
     private String logedInUserName;
 
     public DetailsFragment(){

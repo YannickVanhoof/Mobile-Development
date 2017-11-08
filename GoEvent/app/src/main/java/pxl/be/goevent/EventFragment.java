@@ -38,50 +38,61 @@ public class EventFragment extends Fragment {
         String type = bundle.getString("Type");
         List<String> events =null;
         ApiCaller caller = new ApiCaller();
+        String[] name = new String[0];
+        String[] date = new String[0];
         try {
             String json = caller.execute("http://goevent.azurewebsites.net/api/Event" ,"GET").get();
             JsonParser parser = new JsonParser();
             Event[] eventsFromJson = parser.JsonToEventArray(json);
 
             filteredList = filterEventArrayByCategory(type,eventsFromJson);
-            String[] data = new String[filteredList.size()];
+            //String[] data = new String[filteredList.size()];
+            name = new String[filteredList.size()];
+            date = new String[filteredList.size()];
 
             for (int i = 0; i < filteredList.size(); i++) {
-                data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDateAsString();
-
+                //data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDateAsString();
+                name[i] = filteredList.get(i).getName();
+                date[i] = filteredList.get(i).getDateAsString();
             }
-            events = new ArrayList<>(Arrays.asList(data));
+            //events = new ArrayList<>(Arrays.asList(data));
 
         }catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
-        mEventAdapter =
+        /*mEventAdapter =
                 new ArrayAdapter<>(
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_event, // The name of the layout ID.
                         R.id.list_item_event_textview, // The ID of the textview to populate.
-                        events);
+                        events);*/
+
+        final CustonListAdapter adapter = new CustonListAdapter(getActivity(), name, date);
 
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_event);
-        listView.setAdapter(mEventAdapter);
+        //listView.setAdapter(mEventAdapter);
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                String detail = mEventAdapter.getItem(position);
+                String detail = adapter.getItem(position);
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
                         .putExtra(Intent.EXTRA_TEXT, detail)
                         .putExtra("EventId" , filteredList.get(position).getId() +"");
                 startActivity(intent);
             }
         });
+
+
+
 
         return rootView;
     }
