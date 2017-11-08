@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,10 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -54,7 +51,7 @@ import java.util.concurrent.ExecutionException;
 
 public class AddEventActivity extends Application implements View.OnClickListener {
 
-    private Button addButton, uploadButton, chooseButton;
+    private Button addButton, chooseButton;
 
     private EditText id, name, street, housenumber, city, postcode, date, start, end, description , venue;
 
@@ -92,10 +89,8 @@ public class AddEventActivity extends Application implements View.OnClickListene
         description = (EditText)findViewById(R.id.description_editText);
         venue = (EditText)findViewById(R.id.venue_editText);
         chooseButton = (Button)findViewById(R.id.choose);
-        uploadButton = (Button)findViewById(R.id.upload);
         imageView = (ImageView) findViewById(R.id.image);
         chooseButton.setOnClickListener(this);
-        uploadButton.setOnClickListener(this);
 
         addButton = (Button)findViewById(R.id.addButton);
 
@@ -129,6 +124,13 @@ public class AddEventActivity extends Application implements View.OnClickListene
                     e1.printStackTrace();
                 }
 
+
+                uploadFile();
+
+                Intent myIntent = new Intent(AddEventActivity.this, EventsActivity.class)
+                        .putExtra("Type", e.getCategory());
+                startActivity(myIntent);
+
             }
         });
     }
@@ -157,14 +159,13 @@ public class AddEventActivity extends Application implements View.OnClickListene
 
     private void uploadFile() {
         //if there is a file to upload
-        Log.e("filePath", filePath.toString());
         if (filePath != null) {
             //displaying a progress dialog while upload is going on
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
-            StorageReference riversRef = mStorageRef.child("images/pic.jpg");
+            StorageReference riversRef = mStorageRef.child("images/"+e.getName()+".jpg");
             riversRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -245,7 +246,8 @@ public class AddEventActivity extends Application implements View.OnClickListene
         event.setDescription(description.getText().toString());
         ApiCaller caller = new ApiCaller();
         String username = getIntent().getStringExtra("Username");
-        Log.d("username" , username +"");
+        
+ origin/master
         String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
         JsonParser parser = new JsonParser();
         event.setOrganisator(getUser());
@@ -308,9 +310,6 @@ public class AddEventActivity extends Application implements View.OnClickListene
     public void onClick(View view) {
         if (view == chooseButton) {
             showFileChooser();
-        } else if (view == uploadButton) {
-            Log.e("filePath", filePath.toString());
-            uploadFile();
         }
     }
 
