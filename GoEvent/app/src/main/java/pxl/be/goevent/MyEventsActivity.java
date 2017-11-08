@@ -13,13 +13,15 @@ import com.facebook.login.LoginManager;
  * Created by 11500046 on 2/11/2017.
  */
 
-public class MyEventsActivity extends AppCompatActivity {
+public class MyEventsActivity extends Application {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
         MyEventsFragment fragment = new MyEventsFragment();
-        //fragment.setArguments(bundle);
+        Bundle bundle = new Bundle();
+        bundle.putInt("UserId" , getUser().getId());
+        fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container_event, fragment)
                 .commit();
@@ -41,9 +43,7 @@ public class MyEventsActivity extends AppCompatActivity {
             case R.id.myevents:
                 startActivity(new Intent(this, HomeActivity.class));
                 return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
+
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 startActivity(new Intent(this, MainActivity.class));

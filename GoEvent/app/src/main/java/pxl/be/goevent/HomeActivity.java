@@ -3,13 +3,14 @@ package pxl.be.goevent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends Application {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
                     .add(R.id.container_home, new HomeFragment())
                     .commit();
         }
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,15 +40,13 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.myevents:
                 startActivity(new Intent(this, MyEventsActivity.class));
                 return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
+
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.addEvent:
-                startActivity(new Intent(this, AddEventActivity.class));
+                startActivity(new Intent(this, AddEventActivity.class).putExtra("Username" , "YannickVh"));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

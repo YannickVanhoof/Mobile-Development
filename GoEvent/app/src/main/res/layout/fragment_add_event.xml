@@ -1,0 +1,202 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="5pt">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                android:text="Name:"
+                android:background="@android:color/white"/>
+
+            <EditText
+                android:id="@+id/name_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/street"
+                android:text="Street:"
+                android:background="@android:color/white"/>
+
+            <EditText
+                android:id="@+id/street_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/houseNumber"
+                android:text="House number:"
+                android:background="@android:color/white"/>
+
+            <EditText
+                android:id="@+id/houseNumber_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/city"
+                android:text="City:"
+                android:background="@android:color/white"/>
+
+            <EditText
+                android:id="@+id/city_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:id="@+id/postcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Postal code:" />
+
+            <EditText
+                android:id="@+id/postcode_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:id="@+id/venue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Venue:" />
+
+            <EditText
+                android:id="@+id/venue_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Category:" />
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/type_spinner"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"></Spinner>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Date: (dd-MM-yyyy)" />
+
+            <EditText
+                android:id="@+id/date_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="datetime"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <TextView
+                android:id="@+id/startTime_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Start time: (HH:mm)" />
+
+            <EditText
+                android:id="@+id/startTime_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5pt"
+                android:background="@android:color/white"
+                android:inputType="time" />
+
+            <TextView
+                android:id="@+id/endTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="End time: (HH:mm)" />
+
+            <EditText
+                android:id="@+id/endTime_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5pt"
+                android:background="@android:color/white"
+                android:inputType="time" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="Description:" />
+
+            <EditText
+                android:id="@+id/description_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_marginBottom="5pt"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chooseButton"
+                android:text="Choose image"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5pt"
+                android:id="@+id/addButton"
+                android:text="Add Event"
+                android:layout_alignBaseline="@+id/scrollView"
+                android:background="@color/cardview_dark_background"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

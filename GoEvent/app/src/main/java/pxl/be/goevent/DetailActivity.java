@@ -1,5 +1,6 @@
 package pxl.be.goevent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.facebook.login.LoginManager;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends Application {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,8 @@ public class DetailActivity extends AppCompatActivity {
             String eventId = getIntent().getStringExtra("EventId");
             Bundle bundle = new Bundle();
             bundle.putString("EventId" , eventId);
-            bundle.putString("Username" ,"YannickVh");
+            bundle.putString("Username" , getUser().getUserName());
+            Log.d("!!!!!!Username" , getUser().getUserName());
             DetailsFragment fragment = new DetailsFragment();
             fragment.setArguments(bundle);
            getSupportFragmentManager().beginTransaction()
@@ -48,9 +50,6 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             case R.id.myevents:
                 startActivity(new Intent(this, MyEventsActivity.class));
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();

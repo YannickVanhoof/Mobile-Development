@@ -12,8 +12,10 @@ import java.sql.Array;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,59 +25,58 @@ import java.util.Objects;
 public class JsonParser {
     public Event[] JsonToEventArray(String jsonString)
             throws JSONException {
-        Log.d("JSONSTRING" , jsonString);
         JSONArray events = new JSONArray(jsonString);
         Event[] results = new Event[events.length()];
-        for (int i = 0; i < events.length(); i++) {
-            JSONObject e = events.getJSONObject(i);
-
-            String attendees = e.get("Attendees")+"";
+        for (int i = 0; i<events.length() ; i++) {
+            JSONObject j = events.getJSONObject(i);
+            String attendees = j.get("Attendees")+"";
             Event result = new Event();
-            result.setCity(e.getString("City"));
+            result.setCity(j.getString("City"));
             result.setCoverPhoto(null);
+                try{
+                   result.setAttendees(Arrays.asList(JsonToAppUserArray(attendees)));
+               }catch (Exception ex){
+                   result.setAttendees(null);
+               }
 
-            if (!attendees.equals(null +"")) {
-                result.setAttendees(Arrays.asList(JsonToAppUserArray(attendees)));
-            } else {
-             result.setAttendees(null);
-            }
-
-
-            String organisator = e.getString("Organisator");
-            Log.d("ORGANISATOR" , organisator);
-            if (organisator.equals("null")){
-                result.setOrganisator(null);
-            }else {
-                result.setOrganisator(JsonToAppUser(organisator));
-            }
 
 
 
             try {
+                String organisator = j.getString("Organisator");
+
+                if (organisator.equals("null")){
+                    result.setOrganisator(null);
+                }else {
+                    result.setOrganisator(JsonToAppUser(organisator));
+                }
+            }catch (Exception ex){
+                result.setOrganisator(null);
+            }
+            try {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                Date date = format.parse(e.getString("Date"));
-                Date time =  format.parse(e.getString("StartTime"));
-                Date endTime =  format.parse(e.getString("EndTime"));
+                Date date = format.parse(j.getString("Date"));
+                Date time =  format.parse(j.getString("StartTime"));
+                Date endTime =  format.parse(j.getString("EndTime"));
                 result.setDate(date);
                 result.setEndTime(endTime);
                 result.setStartTime(time);
             } catch (ParseException e1) {
                  e1.printStackTrace();
             }
-            //result.setDate((Date) e.get("Date"));
-            result.setDescription(e.getString("Description"));
-            result.setHouseNumber(e.getInt("houseNumber"));
-            result.setId(e.getInt("Id"));
-            result.setLatitude(e.getDouble("Latitude"));
-            result.setLongitude(e.getDouble("Longitude"));
-            result.setName(e.getString("Name"));
-            result.setStreet(e.getString("Street"));
-            result.setVenue(e.getString("Venue"));
-            result.setPostalCode(e.getInt("PostalCode"));
-            result.setCategory(e.getString("Type"));
+            result.setDescription(j.getString("Description"));
+            result.setHouseNumber(j.getInt("houseNumber"));
+            result.setId(j.getInt("Id"));
+            result.setLatitude(j.getDouble("Latitude"));
+            result.setLongitude(j.getDouble("Longitude"));
+            result.setName(j.getString("Name"));
+            result.setStreet(j.getString("Street"));
+            result.setVenue(j.getString("Venue"));
+            result.setPostalCode(j.getInt("PostalCode"));
+            result.setCategory(j.getString("Type"));
             results[i] = result;
+
         }
-        Log.d("Parse" , "succes");
         return results;
 
     }
@@ -86,12 +87,12 @@ public class JsonParser {
             JSONObject event = new JSONObject(jsonString);
             String attendees = event.get("Attendees")+"";
             Event result = new Event();
-            String organisator = event.getString("Organisator");
+            /*String organisator = event.getString("Organisator");
             if (organisator != null){
                 result.setOrganisator(JsonToAppUser(organisator));
             }else {
                 result.setOrganisator(null);
-            }
+            }*/
 
              if (!attendees.equals(null +"")) {
             result.setAttendees(Arrays.asList(JsonToAppUserArray(attendees)));
@@ -120,7 +121,7 @@ public class JsonParser {
             result.setEndTime(endTime);
             result.setStartTime(time);
         } catch (ParseException e1) {
-            Log.d("DATUM" , e1.getMessage() +"");
+
             e1.printStackTrace();
         }
 
@@ -141,7 +142,14 @@ public class JsonParser {
         result.setCity(user.getString("City"));
         result.setPostalCode(user.getInt("PostalCode"));
         result.setOrganisedEvents(null);
-        result.setEvents(null);
+        JSONArray iets = user.getJSONArray("Events");
+        for (int i = 0 ; i <iets.length() ; i++){
+            Log.d("aaa", "JsonToAppUser: " + iets.get(i));
+        }
+        Log.d("iets" , Arrays.asList(JsonToEventArray(iets +"")) +"");
+        //Event[] events = JsonToEventArray(iets);
+        //result.setEvents(Arrays.asList(events));
+        //Log.d("Resultaat users" , events.length +"");
         return result;
     }
 
@@ -162,7 +170,7 @@ public class JsonParser {
             result.setCity(user.getString("City"));
             result.setPostalCode(user.getInt("PostalCode"));
             result.setOrganisedEvents(null);
-            result.setEvents(null);
+            result.setEvents(Arrays.asList(JsonToEventArray(user.get("Events") + "")));
             results[i] = result;
         }
         return results;

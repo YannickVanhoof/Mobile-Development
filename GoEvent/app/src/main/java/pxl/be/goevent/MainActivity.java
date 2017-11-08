@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Application {
 
     Button loginButton, cancelButton;
     EditText nameEditText, passwordEditText;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if(passwordEditText.getText().toString().equals(user.getPassword())) {
                             Toast.makeText(getApplicationContext(), "Redirecting...",Toast.LENGTH_SHORT).show();
-
+                            setUser(user);
                             // Save username and password
                             getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
                                     .edit()

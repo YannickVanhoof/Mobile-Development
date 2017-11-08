@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), EventsActivity.class)
                         .putExtra("Type", map.get("type"));
+
                 startActivity(intent);
 
             }

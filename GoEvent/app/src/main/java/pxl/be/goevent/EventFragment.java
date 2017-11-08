@@ -35,9 +35,7 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-       String type = bundle.getString("Type");
-
-        // Create some dummy data for the ListView.
+        String type = bundle.getString("Type");
         List<String> events =null;
         ApiCaller caller = new ApiCaller();
         try {

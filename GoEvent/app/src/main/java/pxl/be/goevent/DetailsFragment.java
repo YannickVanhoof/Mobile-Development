@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ public class DetailsFragment extends Fragment{
         final View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
         String id = getArguments().getString("EventId");
         logedInUserName = getArguments().getString("Username");
+        Log.d("USERNAME!!!!!!!! " , logedInUserName);
         ApiCaller caller = new ApiCaller();
         try {
            String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id , "GET").get();
@@ -89,7 +91,6 @@ public class DetailsFragment extends Fragment{
             });
 
             final Button button = rootView.findViewById(R.id.going);
-            //Log.d("iets" , event.getOrganisator() +"");
             List<String>users = new ArrayList<>();
             if(event.getAttendees() == null){
                 users.add("No one is going");
@@ -132,11 +133,13 @@ public class DetailsFragment extends Fragment{
         ApiCaller caller = new ApiCaller();
         try {
 
-            String user = caller.execute("http://goevent.azurewebsites.net/api/User/1" , "GET").get();
+            String user = caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+logedInUserName , "GET").get();
             caller = new ApiCaller();
+            Log.d("event!!!!!" , event.getId() +"");
             String result = caller.execute("http://goevent.azurewebsites.net/api/Event/"+  event.getId() +"/addUser" , "POST" ,user).get();
 
-
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(DetailsFragment.this).attach(DetailsFragment.this).commit();
 
 
         } catch (InterruptedException e) {
