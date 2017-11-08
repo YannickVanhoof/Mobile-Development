@@ -1,43 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-      android:id="@+id/container"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <ListView android:id="@android:id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/userName"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/userName"
-        android:inputType="text" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/userPassword"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/password"
-        android:inputType="textVisiblePassword" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/email"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/email"
-        android:inputType="textEmailAddress" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/firstname"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/firstname"
-        android:inputType="text" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/lastname"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/lastname"
-        android:inputType="text" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/Address"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/address"
-        android:inputType="text" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/City"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/city"
-        android:inputType="text" />
-    <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/PostalCode"/>
-    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/postalcode"
-        android:inputType="number" />
-   <Button
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:text="@string/Register"
-       android:id="@+id/register"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context=".RegisterActivity" tools:ignore="MergeRootFrame" >
 
-
-</LinearLayout>
-</ScrollView>
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="pxl.be.goevent.RegisterFragment"
+        android:id="@+id/register_fragment"/>
+</FrameLayout>

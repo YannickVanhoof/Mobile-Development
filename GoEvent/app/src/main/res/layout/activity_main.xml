@@ -1,87 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="pxl.be.goevent.MainActivity"
-    tools:layout_editor_absoluteY="8dp"
-    tools:layout_editor_absoluteX="8dp"
-    android:orientation="vertical"
-    android:weightSum="1">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context=".MainActivity" tools:ignore="MergeRootFrame" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@mipmap/login_logo" />
-
-
-    <EditText
-        android:id="@+id/name_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:focusable="true"
-        android:hint="@string/logintext"
-        android:textColorHighlight="@android:color/black"
-        android:textColorHint="@android:color/black" />
-
-
-    <EditText
-        android:id="@+id/password_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:textColorHint="@android:color/black" />
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5pt"
-        android:layout_marginTop="46dp"
-        android:background="@color/cardview_dark_background"
-        android:text="@string/loginbutton" />
-
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5pt"
-        android:background="@color/cardview_dark_background"
-        android:text="@string/cancelbutton" />
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5pt"
-        android:background="@color/cardview_dark_background"
-        android:text="@string/Register" />
-
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/fb_login_button"
+    <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5pt"
-        android:layout_marginTop="46dp" />
-
-    <TextView
-        android:id="@+id/error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-</LinearLayout>
-</ScrollView>
+        android:name="pxl.be.goevent.MainFragment"
+        android:id="@+id/main_fragment"/>
+</FrameLayout>

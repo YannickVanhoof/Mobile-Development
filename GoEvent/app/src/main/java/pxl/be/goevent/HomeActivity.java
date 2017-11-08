@@ -7,8 +7,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends Application {
 
@@ -19,11 +24,23 @@ public class HomeActivity extends Application {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         if (savedInstanceState == null) {
+            String userName = getIntent().getStringExtra("userName");
+            try {
+                String result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+userName, "GET").get();
+                AppUser user = new JsonParser().JsonToAppUser(result);
+                setUser(user);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container_home, new HomeFragment())
                     .commit();
         }
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
