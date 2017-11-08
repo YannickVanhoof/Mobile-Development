@@ -67,9 +67,9 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
         String result = null;
         try {
             result = caller.execute("http://goevent.azurewebsites.net/api/User" , "POST" ,json).get();
-            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-            intent.putExtra("Username" , user.getUserName());
+            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
             startActivity(intent);
+            finish();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
