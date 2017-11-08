@@ -167,7 +167,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private Event createEvent() throws ParseException, ExecutionException, InterruptedException, JSONException {
         Event event = new Event();
-        event.setId(1000);
+        event.setId(100);
         event.setName(name.getText().toString());
         event.setStreet(street.getText().toString());
         event.setHouseNumber(Integer.parseInt(housenumber.getText().toString()));
@@ -181,11 +181,11 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         event.setDescription(description.getText().toString());
         ApiCaller caller = new ApiCaller();
 
-        String username = "KimP";//getIntent().getStringExtra("Username");
+        /*String username = "KimP";//getIntent().getStringExtra("Username");
         String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
         JsonParser parser = new JsonParser();
         AppUser user = parser.JsonToAppUser(result);
-        event.setOrganisator(user);
+        event.setOrganisator(user);*/
 
         /*String username = getArguments().getString("Username");
         String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();

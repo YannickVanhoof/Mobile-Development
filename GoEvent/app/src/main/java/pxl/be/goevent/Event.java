@@ -25,7 +25,7 @@ public class Event {
     private Date startTime;
     private Date endTime;
     private String description;
-    private AppUser organisator;
+   // private AppUser organisator;
     private List<AppUser> attendees;
     private byte[] coverPhoto;
     private double longitude;
@@ -46,7 +46,7 @@ public class Event {
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
-        this.organisator = organisator;
+        //this.organisator = organisator;
         this.attendees = attendees;
         this.coverPhoto = coverPhoto;
         this.longitude = longitude;
@@ -162,13 +162,13 @@ public class Event {
         this.description = description;
     }
 
-    public AppUser getOrganisator() {
+   /* public AppUser getOrganisator() {
         return organisator;
     }
 
     public void setOrganisator(AppUser organisator) {
         this.organisator = organisator;
-    }
+    }*/
 
     public List<AppUser> getAttendees() {
         return attendees;
@@ -224,7 +224,7 @@ public class Event {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", description='" + description + '\'' +
-                ", organisator=" + organisator +
+                //", organisator=" + organisator +
                 ", attendees=" + attendees +
                 ", coverPhoto=" + Arrays.toString(coverPhoto) +
                 ", longitude=" + longitude +

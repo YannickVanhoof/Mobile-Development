@@ -39,10 +39,7 @@ public class JsonParser {
                    result.setAttendees(null);
                }
 
-
-
-
-            try {
+            /*try {
                 String organisator = j.getString("Organisator");
 
                 if (organisator.equals("null")){
@@ -52,7 +49,7 @@ public class JsonParser {
                 }
             }catch (Exception ex){
                 result.setOrganisator(null);
-            }
+            }*/
             try {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 Date date = format.parse(j.getString("Date"));
@@ -87,6 +84,7 @@ public class JsonParser {
             JSONObject event = new JSONObject(jsonString);
             String attendees = event.get("Attendees")+"";
             Event result = new Event();
+
             /*String organisator = event.getString("Organisator");
             if (organisator != null){
                 result.setOrganisator(JsonToAppUser(organisator));
@@ -141,7 +139,9 @@ public class JsonParser {
         result.setAddress(user.getString("Adress"));
         result.setCity(user.getString("City"));
         result.setPostalCode(user.getInt("PostalCode"));
-        result.setOrganisedEvents(null);
+
+//        result.setOrganisedEvents(null);
+
         JSONArray iets = user.getJSONArray("Events");
         for (int i = 0 ; i <iets.length() ; i++){
             Log.d("aaa", "JsonToAppUser: " + iets.get(i));
@@ -169,7 +169,9 @@ public class JsonParser {
             result.setAddress(user.getString("Adress"));
             result.setCity(user.getString("City"));
             result.setPostalCode(user.getInt("PostalCode"));
-            result.setOrganisedEvents(null);
+
+            //result.setOrganisedEvents(null);
+
             result.setEvents(Arrays.asList(JsonToEventArray(user.get("Events") + "")));
             results[i] = result;
         }
