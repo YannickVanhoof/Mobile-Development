@@ -244,13 +244,12 @@ public class AddEventActivity extends Application implements View.OnClickListene
         event.setStartTime(createTime(start.getText().toString()));
         event.setEndTime(createTime(end.getText().toString()));
         event.setDescription(description.getText().toString());
-        ApiCaller caller = new ApiCaller();
-        String username = getIntent().getStringExtra("Username");
+        //ApiCaller caller = new ApiCaller();
+        //String username = getIntent().getStringExtra("Username");
         
- origin/master
-        String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
-        JsonParser parser = new JsonParser();
-        event.setOrganisator(getUser());
+
+        //String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
+        //JsonParser parser = new JsonParser();
         LatLng latlng = getLocationFromAddress(this, event.getStreet() + ", " + event.getHouseNumber() + ", " + event.getCity());
         event.setLongitude(latlng.longitude);
         event.setLatitude(latlng.latitude);

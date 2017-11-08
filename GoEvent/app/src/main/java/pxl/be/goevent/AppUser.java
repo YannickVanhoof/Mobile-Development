@@ -17,15 +17,15 @@ public class AppUser {
     private String address;
     private String city;
     int PostalCode;
-    private List<Event> OrganisedEvents;
+  //  private List<Event> OrganisedEvents;
     private List<Event> events;
 
     public AppUser() {
-        OrganisedEvents = new ArrayList<>() ;
+       // OrganisedEvents = new ArrayList<>() ;
         events = new ArrayList<>();
     }
 
-    public AppUser(int id, String userName, String password, String email, String firstname, String lastName, String address, String city, int postalCode, List<Event> organisedEvents, List<Event> events) {
+    public AppUser(int id, String userName, String password, String email, String firstname, String lastName, String address, String city, int postalCode, List<Event> events) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -35,7 +35,7 @@ public class AppUser {
         this.address = address;
         this.city = city;
         PostalCode = postalCode;
-        OrganisedEvents = organisedEvents;
+       // OrganisedEvents = organisedEvents;
         this.events = events;
     }
 
@@ -111,13 +111,13 @@ public class AppUser {
         PostalCode = postalCode;
     }
 
-    public List<Event> getOrganisedEvents() {
+   /* public List<Event> getOrganisedEvents() {
         return OrganisedEvents;
     }
 
     public void setOrganisedEvents(List<Event> organisedEvents) {
         OrganisedEvents = organisedEvents;
-    }
+    }*/
 
     public List<Event> getEvents() {
         return events;
@@ -139,7 +139,7 @@ public class AppUser {
                 ", address='" + address + '\'' +
                 ", city='" + city + '\'' +
                 ", PostalCode=" + PostalCode +
-                ", OrganisedEvents=" + OrganisedEvents +
+               // ", OrganisedEvents=" + OrganisedEvents +
                 ", events=" + events +
                 '}';
     }
