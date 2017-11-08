@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 
-public class EventsActivity extends AppCompatActivity {
+public class EventsActivity extends Application {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,6 @@ public class EventsActivity extends AppCompatActivity {
                 return true;
             case R.id.myevents:
                 startActivity(new Intent(this, MyEventsActivity.class));
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();

@@ -16,17 +16,17 @@ import java.util.concurrent.ExecutionException;
  * Created by 11500046 on 4/11/2017.
  */
 
-public class RegisterActivity extends AppCompatPreferenceActivity{
+public class RegisterActivity extends Application{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final TextView   userNameText = findViewById(R.id.userName);
+        final TextView   userNameText = (TextView) findViewById(R.id.userName);
        String last_name = getIntent().getStringExtra("last_name");
         final String user_name = getIntent().getStringExtra("user_name");
         String first_name = getIntent().getStringExtra("first_name");
         if (last_name != null){
-            TextView lastNameText = findViewById(R.id.lastname);
+            TextView lastNameText = (TextView) findViewById(R.id.lastname);
             Log.d("last" ,lastNameText +"");
             lastNameText.setText(last_name);
         }
@@ -36,11 +36,11 @@ public class RegisterActivity extends AppCompatPreferenceActivity{
             userNameText.setText(user_name);
         }
         if (first_name != null){
-            TextView firstNameText = findViewById(R.id.firstname);
+            TextView firstNameText = (TextView) findViewById(R.id.firstname);
             firstNameText.setText(first_name);
         }
 
-        Button register = findViewById(R.id.register);
+        Button register = (Button) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

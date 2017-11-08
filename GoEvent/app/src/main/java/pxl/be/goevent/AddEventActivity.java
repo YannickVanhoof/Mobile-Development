@@ -1,10 +1,15 @@
 package pxl.be.goevent;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +19,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +52,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddEventActivity extends Application implements View.OnClickListener {
 
-    private Button addButton;
+    private Button addButton, uploadButton, chooseButton;
 
     private EditText id, name, street, housenumber, city, postcode, date, start, end, description , venue;
 
@@ -49,10 +62,20 @@ public class AddEventActivity extends AppCompatActivity {
 
     private Event e;
 
+    private static final int PICK_IMAGE_REQUEST = 234;
+
+    private ImageView imageView;
+
+    private Uri filePath;
+
+    private StorageReference mStorageRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         spinner = (Spinner)findViewById(R.id.type_spinner);
         addItemsOnSpinner();
@@ -68,6 +91,12 @@ public class AddEventActivity extends AppCompatActivity {
         end = (EditText)findViewById(R.id.endTime_editText);
         description = (EditText)findViewById(R.id.description_editText);
         venue = (EditText)findViewById(R.id.venue_editText);
+        chooseButton = (Button)findViewById(R.id.choose);
+        uploadButton = (Button)findViewById(R.id.upload);
+        imageView = (ImageView) findViewById(R.id.image);
+        chooseButton.setOnClickListener(this);
+        uploadButton.setOnClickListener(this);
+
         addButton = (Button)findViewById(R.id.addButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +133,78 @@ public class AddEventActivity extends AppCompatActivity {
         });
     }
 
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadFile() {
+        //if there is a file to upload
+        Log.e("filePath", filePath.toString());
+        if (filePath != null) {
+            //displaying a progress dialog while upload is going on
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
+
+            StorageReference riversRef = mStorageRef.child("images/pic.jpg");
+            riversRef.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //if the upload is successfull
+                            //hiding the progress dialog
+                            progressDialog.dismiss();
+
+                            //and displaying a success toast
+                            Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            //if the upload is not successfull
+                            //hiding the progress dialog
+                            progressDialog.dismiss();
+
+                            //and displaying error message
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            //calculating progress percentage
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                            //displaying percentage in progress dialog
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                        }
+                    });
+        }
+        //if there is not any file
+        else {
+            //you can display an error toast
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -119,9 +220,6 @@ public class AddEventActivity extends AppCompatActivity {
                 return true;
             case R.id.myevents:
                 startActivity(new Intent(this, MyEventsActivity.class));
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
@@ -150,9 +248,7 @@ public class AddEventActivity extends AppCompatActivity {
         Log.d("username" , username +"");
         String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
         JsonParser parser = new JsonParser();
-        Log.d("result user"  , result +"") ;
-        AppUser user = parser.JsonToAppUser(result);
-        event.setOrganisator(user);
+        event.setOrganisator(getUser());
         LatLng latlng = getLocationFromAddress(this, event.getStreet() + ", " + event.getHouseNumber() + ", " + event.getCity());
         event.setLongitude(latlng.longitude);
         event.setLatitude(latlng.latitude);
@@ -205,6 +301,21 @@ public class AddEventActivity extends AppCompatActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == chooseButton) {
+            showFileChooser();
+        } else if (view == uploadButton) {
+            Log.e("filePath", filePath.toString());
+            uploadFile();
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

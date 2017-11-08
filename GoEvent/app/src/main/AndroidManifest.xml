@@ -36,9 +36,6 @@
         <activity android:name=".DetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".MyEventsActivity" android:screenOrientation="portrait" />
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
