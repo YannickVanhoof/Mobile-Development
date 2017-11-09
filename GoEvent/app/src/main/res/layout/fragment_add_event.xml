@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
-                android:text="Name:"
+                android:text="@string/name"
                 android:background="@android:color/white"/>
 
             <EditText
@@ -35,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/street"
-                android:text="Street:"
+                android:text="@string/street"
                 android:background="@android:color/white"/>
 
             <EditText
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/houseNumber"
-                android:text="House number:"
+                android:text="@string/houseNumber"
                 android:background="@android:color/white"/>
 
             <EditText
@@ -64,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/city"
-                android:text="City:"
+                android:text="@string/city"
                 android:background="@android:color/white"/>
 
             <EditText
@@ -79,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="Postal code:" />
+                android:text="@string/PostalCode" />
 
             <EditText
                 android:id="@+id/postcode_editText"
@@ -94,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="Venue:" />
+                android:text="@string/venue" />
 
             <EditText
                 android:id="@+id/venue_editText"
@@ -108,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="Category:" />
+                android:text="@string/category" />
 
             <Spinner
                 android:layout_width="fill_parent"
@@ -122,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="Date: (dd-MM-yyyy)" />
+                android:text="@string/Date" />
 
             <EditText
                 android:id="@+id/date_editText"
@@ -137,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="Start time: (HH:mm)" />
+                android:text="@string/StartTime" />
 
             <EditText
                 android:id="@+id/startTime_editText"
@@ -152,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="End time: (HH:mm)" />
+                android:text="@string/EndTime" />
 
             <EditText
                 android:id="@+id/endTime_editText"
@@ -167,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:text="Description:" />
+                android:text="@string/Description" />
 
             <EditText
                 android:id="@+id/description_editText"
@@ -182,19 +183,20 @@
                 android:id="@+id/image"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:id="@+id/chooseButton"
-                android:text="Choose image"/>
+                android:text="@string/choose_image"
+                android:background="@android:color/holo_red_dark"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5pt"
                 android:id="@+id/addButton"
-                android:text="Add Event"
-                android:layout_alignBaseline="@+id/scrollView"
-                android:background="@color/cardview_dark_background"/>
+                android:text="@string/add_event"
+                android:background="@android:color/holo_red_dark"/>
         </LinearLayout>
 
     </ScrollView>

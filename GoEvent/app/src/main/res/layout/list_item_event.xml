@@ -11,9 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:id="@+id/list_name" />
+        android:id="@+id/list_name"
+        android:textColor="@android:color/white"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_date"/>
+        android:id="@+id/list_date"
+        android:textColor="@android:color/white"/>
 </LinearLayout>

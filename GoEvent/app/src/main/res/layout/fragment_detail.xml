@@ -2,7 +2,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/black">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,13 +25,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/eventnname"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/eventname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
         <TableRow>
             <TextView
@@ -38,12 +41,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
 
         <TableRow>
@@ -52,13 +57,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/venue"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/venue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
 
         <TableRow>
@@ -66,13 +73,15 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/address" android:layout_margin="1dp"/>
+                android:text="@string/address" android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
 
         <TableRow>
@@ -81,13 +90,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
 
         <TableRow>
@@ -96,13 +107,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/startTime"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
 
 
@@ -112,13 +125,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/endTime"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
         <TableRow>
             <Button
@@ -126,26 +141,30 @@
                 android:layout_height="wrap_content"
                 android:text="@string/goTo"
                 android:id="@+id/going"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:background="@android:color/holo_red_dark"/>
             <TextView
                 android:id="@+id/alreadyGoing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
                 android:text="@string/alreadGoing"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
         <TableRow>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/attendees"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/attendees"
-                android:layout_margin="1dp"/>
+                android:layout_margin="1dp"
+                android:textColor="@android:color/white"/>
         </TableRow>
     </TableLayout>
     </LinearLayout>
