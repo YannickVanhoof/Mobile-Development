@@ -1,11 +1,8 @@
-package pxl.be.goevent;
+package pxl.be.goevent.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
+
+import pxl.be.goevent.Activities.HomeActivity;
+import pxl.be.goevent.ApiCaller;
+import pxl.be.goevent.AppUser;
+import pxl.be.goevent.JsonParser;
+import pxl.be.goevent.R;
 
 public class RegisterFragment extends Fragment {
 
@@ -70,8 +73,7 @@ public class RegisterFragment extends Fragment {
         ApiCaller caller = new ApiCaller();
         JsonParser parser = new JsonParser();
         String json = parser.AppUserToJson(user);
-        Log.d("json" , json);
-        String result = null;
+            String result = null;
         try {
             result = caller.execute("http://goevent.azurewebsites.net/api/User" , "POST" ,json).get();
             Intent intent = new Intent(getActivity(), HomeActivity.class)
@@ -83,7 +85,7 @@ public class RegisterFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Log.d("result" , result);
+
 
     }
     private AppUser CreateUser(View view){
@@ -109,9 +111,6 @@ public class RegisterFragment extends Fragment {
     private boolean CheckIfUserNameAlreadyExist(String username) throws ExecutionException, InterruptedException {
         ApiCaller caller = new ApiCaller();
         String result = caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "Get").get();
-        Log.d("aa" , username);
-        Log.d("aa" , result);
-        Log.d("result" ,(result.contains(username)) +"");
         return result.contains(username);
     }
 }

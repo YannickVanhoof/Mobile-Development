@@ -1,4 +1,4 @@
-package pxl.be.goevent;
+package pxl.be.goevent.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -39,6 +39,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import pxl.be.goevent.Activities.AddEventActivity;
+import pxl.be.goevent.Activities.EventsActivity;
+import pxl.be.goevent.ApiCaller;
+import pxl.be.goevent.Event;
+import pxl.be.goevent.JsonParser;
+import pxl.be.goevent.R;
+
 
 public class AddEventFragment extends Fragment implements View.OnClickListener {
 
@@ -48,7 +55,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private Spinner spinner;
 
-    private Event e;
+    private Event event;
 
     private static final int PICK_IMAGE_REQUEST = 234;
 
@@ -123,7 +130,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
-            StorageReference riversRef = mStorageRef.child("images/"+e.getName()+".jpg");
+            StorageReference riversRef = mStorageRef.child("images/"+ event.getName()+".jpg");
             riversRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -179,19 +186,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         event.setStartTime(createTime(start.getText().toString()));
         event.setEndTime(createTime(end.getText().toString()));
         event.setDescription(description.getText().toString());
-        ApiCaller caller = new ApiCaller();
-
-        /*String username = "KimP";//getIntent().getStringExtra("Username");
-        String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
-        JsonParser parser = new JsonParser();
-        AppUser user = parser.JsonToAppUser(result);
-        event.setOrganisator(user);*/
-
-        /*String username = getArguments().getString("Username");
-        String result =caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+username , "get").get();
-        JsonParser parser = new JsonParser();
-        event.setOrganisator(getUser());*/
-
         LatLng latlng = getLocationFromAddress(getActivity(), event.getStreet() + ", " + event.getHouseNumber() + ", " + event.getCity());
         event.setLongitude(latlng.longitude);
         event.setLatitude(latlng.latitude);
@@ -247,30 +241,19 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private void addEvent() {
         try {
-            e = createEvent();
-            String json = new JsonParser().EventToJson(e);
+            event = createEvent();
+            String json = new JsonParser().EventToJson(event);
             ApiCaller caller = new ApiCaller();
-            try {
-                String result = caller.execute("http://goevent.azurewebsites.net/api/Event" , "POST" , json).get();
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            } catch (ExecutionException e1) {
-                e1.printStackTrace();
-            }
-        } catch (ParseException e1) {
-            e1.printStackTrace();
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
+            caller.execute("http://goevent.azurewebsites.net/api/Event" , "POST" , json).get();
+
+        } catch (ParseException | InterruptedException | ExecutionException | JSONException exception) {
+            exception.printStackTrace();
         }
 
         uploadFile();
 
         Intent myIntent = new Intent(getActivity(), EventsActivity.class)
-                .putExtra("Type", e.getCategory());
+                .putExtra("Type", event.getCategory());
         startActivity(myIntent);
     }
 

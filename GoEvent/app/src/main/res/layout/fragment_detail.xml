@@ -1,56 +1,38 @@
-<LinearLayout android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@android:color/black">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/detail_image"/>
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TableRow>
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/eventnname"
-                android:layout_margin="1dp"
-                android:textColor="@android:color/white"/>
+        android:id="@+id/detail_image"
+        android:contentDescription="@string/coverphoto_for_the_event"/>
 
             <TextView
                 android:id="@+id/eventname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:textColor="@android:color/white"/>
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/description"
-                android:layout_margin="1dp"
-                android:textColor="@android:color/white"/>
-            <TextView
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+
+    <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:textColor="@android:color/white"/>
-        </TableRow>
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <TableRow>
             <TextView
                 android:id="@+id/textView3"
@@ -169,4 +151,3 @@
     </TableLayout>
     </LinearLayout>
 </ScrollView>
-</LinearLayout>

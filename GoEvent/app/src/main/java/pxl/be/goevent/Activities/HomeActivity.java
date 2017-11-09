@@ -1,48 +1,51 @@
-package pxl.be.goevent;
+package pxl.be.goevent.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.facebook.login.LoginManager;
+import org.json.JSONException;
+import java.util.concurrent.ExecutionException;
+import pxl.be.goevent.ApiCaller;
+import pxl.be.goevent.AppUser;
+import pxl.be.goevent.Application;
+import pxl.be.goevent.Fragments.HomeFragment;
+import pxl.be.goevent.JsonParser;
+import pxl.be.goevent.MapsActivity;
+import pxl.be.goevent.R;
 
-public class DetailActivity extends Application {
+public class HomeActivity extends Application {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_home);
         if (savedInstanceState == null) {
-            String eventId = getIntent().getStringExtra("EventId");
-            Bundle bundle = new Bundle();
-            bundle.putString("EventId" , eventId);
-            bundle.putString("Username" , getUser().getUserName());
-            Log.d("!!!!!!Username" , getUser().getUserName());
-            DetailsFragment fragment = new DetailsFragment();
-            fragment.setArguments(bundle);
-           getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, fragment)
+            String userName = getIntent().getStringExtra("userName");
+            try {
+                String result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+userName, "GET").get();
+                AppUser user = new JsonParser().JsonToAppUser(result);
+                setUser(user);
+            } catch (JSONException | InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_home, new HomeFragment())
                     .commit();
         }
     }
 
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.map:
@@ -51,8 +54,10 @@ public class DetailActivity extends Application {
             case R.id.myevents:
                 startActivity(new Intent(this, MyEventsActivity.class));
                 return true;
+
             case R.id.logout:
                 LoginManager.getInstance().logOut();
+                setUser(null);
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.addEvent:
@@ -62,5 +67,4 @@ public class DetailActivity extends Application {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

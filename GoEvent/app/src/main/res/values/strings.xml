@@ -57,4 +57,5 @@
     <string name="Description">Description:</string>
     <string name="choose_image">Choose image</string>
     <string name="add_event">Add Event</string>
+    <string name="coverphoto_for_the_event">Coverphoto for the event</string>
 </resources>

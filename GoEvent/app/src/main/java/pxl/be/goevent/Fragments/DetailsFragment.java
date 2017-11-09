@@ -1,10 +1,6 @@
-package pxl.be.goevent;
+package pxl.be.goevent.Fragments;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -19,22 +15,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
-import org.w3c.dom.Document;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+
+import pxl.be.goevent.ApiCaller;
+import pxl.be.goevent.AppUser;
+import pxl.be.goevent.Event;
+import pxl.be.goevent.JsonParser;
+import pxl.be.goevent.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -55,7 +51,7 @@ public class DetailsFragment extends Fragment{
         final View rootView = inflater.inflate(R.layout.fragment_detail , container , false);
         String id = getArguments().getString("EventId");
         logedInUserName = getArguments().getString("Username");
-        Log.d("USERNAME!!!!!!!! " , logedInUserName);
+
         ApiCaller caller = new ApiCaller();
         try {
            String json = caller.execute("http://goevent.azurewebsites.net/api/Event/"+id , "GET").get();
@@ -135,7 +131,7 @@ public class DetailsFragment extends Fragment{
 
             String user = caller.execute("http://goevent.azurewebsites.net/api/User/Name/"+logedInUserName , "GET").get();
             caller = new ApiCaller();
-            Log.d("event!!!!!" , event.getId() +"");
+
             String result = caller.execute("http://goevent.azurewebsites.net/api/Event/"+  event.getId() +"/addUser" , "POST" ,user).get();
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();

@@ -63,12 +63,8 @@ public class ApiCaller extends AsyncTask<String, String, String> {
 
         URL url = null;
         String response = null;
-        //StrictMode.ThreadPolicy policy = new
-        //StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
         try {
 
-            Log.d("aaaaa" , "POST DATA");
             url = new URL(urlstring);
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
@@ -91,12 +87,11 @@ public class ApiCaller extends AsyncTask<String, String, String> {
             reader.close();
 
             return response;
-        } catch (ProtocolException e) {
+        } catch (ProtocolException e ) {
             e.printStackTrace();
             return e.getMessage();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-
             return e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,8 +112,7 @@ public class ApiCaller extends AsyncTask<String, String, String> {
             InputStream inputStream = urlConnection.getInputStream();
             StringBuilder builder = new StringBuilder();
             if (inputStream == null){
-                Log.d("APICaller" , "Niets gevonden");
-                return "niets gevonden";
+                  return "niets gevonden";
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;

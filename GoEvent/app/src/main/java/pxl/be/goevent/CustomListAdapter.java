@@ -23,13 +23,13 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by kimprzybylski on 8/11/17.
  */
 
-public class CustonListAdapter extends ArrayAdapter<String> {
+public class CustomListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
     private final String[] name;
     private final String[] date;
 
-    public CustonListAdapter(Activity context, String[] name, String[] date) {
+    public CustomListAdapter(Activity context, String[] name, String[] date) {
         super(context, R.layout.list_item_event, name);
         this.context = context;
         this.name = name;
@@ -49,7 +49,6 @@ public class CustonListAdapter extends ArrayAdapter<String> {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-        Log.e("name", name[position]);
         storageReference.child("images/"+name[position]+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

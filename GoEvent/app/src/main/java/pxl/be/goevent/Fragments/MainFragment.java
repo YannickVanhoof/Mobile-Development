@@ -1,9 +1,7 @@
-package pxl.be.goevent;
+package pxl.be.goevent.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -22,9 +19,9 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.share.Sharer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +30,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+
+import pxl.be.goevent.Activities.HomeActivity;
+import pxl.be.goevent.Activities.RegisterActivity;
+import pxl.be.goevent.ApiCaller;
+import pxl.be.goevent.AppUser;
+import pxl.be.goevent.JsonParser;
+import pxl.be.goevent.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -55,6 +59,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LoginManager.getInstance().logOut();
         FacebookSdk.sdkInitialize(FacebookSdk.getApplicationContext());
     }
 
@@ -75,7 +80,6 @@ public class MainFragment extends Fragment {
             password = pref.getString(PREF_PASSWORD, null);
         }else {
             username = getActivity().getIntent().getStringExtra("Username");
-
         }
 
         nameEditText.setText(username);
@@ -85,40 +89,8 @@ public class MainFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = null;
                 try {
-                    result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+nameEditText.getText(), "GET").get();
-                    Log.d("result", result);
-                    if(result.startsWith("{")) {
-                        Log.e("string not empty", "not null");
-                        AppUser user = new JsonParser().JsonToAppUser(result);
-
-                        if(passwordEditText.getText().toString().equals(user.getPassword())) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Redirecting...",Toast.LENGTH_SHORT).show();
-
-                            // Save username and password
-                            getActivity().getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-                                    .edit()
-                                    .putString(PREF_USERNAME, nameEditText.getText().toString())
-                                    .putString(PREF_PASSWORD, passwordEditText.getText().toString())
-                                    .apply();
-
-                            //Start your second activity
-                            Intent intent = new Intent(getActivity(), HomeActivity.class)
-                                    .putExtra("userName", user.getUserName());
-                            startActivity(intent);
-                            getActivity().finish();
-
-                        }else{
-                            Toast.makeText(getActivity().getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    login();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -129,8 +101,7 @@ public class MainFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                startActivity(intent);
+               redirect();
             }
         });
 
@@ -143,21 +114,7 @@ public class MainFragment extends Fragment {
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Redirecting...",Toast.LENGTH_SHORT).show();
-                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Intent intent= createRegisterIntent(object);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, first_name, last_name"); // Parámetros que pedimos a facebook
-                request.setParameters(parameters);
-                request.executeAsync();
+                registerOnSuccessCallback(loginResult);
             }
 
             @Override
@@ -175,12 +132,46 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
+    private void login() throws JSONException {
+        String result = null;
+        try {
+            result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+nameEditText.getText(), "GET").get();
+            Log.d("result", result);
+            if(result.startsWith("{")) {
+                Log.e("string not empty", "not null");
+                AppUser user = new JsonParser().JsonToAppUser(result);
+
+                if(passwordEditText.getText().toString().equals(user.getPassword())) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Redirecting...",Toast.LENGTH_SHORT).show();
+
+                    // Save username and password
+                    getActivity().getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+                            .edit()
+                            .putString(PREF_USERNAME, nameEditText.getText().toString())
+                            .putString(PREF_PASSWORD, passwordEditText.getText().toString())
+                            .apply();
+
+                    //Start your second activity
+                    Intent intent = new Intent(getActivity(), HomeActivity.class)
+                            .putExtra("userName", user.getUserName());
+                    startActivity(intent);
+                    getActivity().finish();
+
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
     private Bundle getFacebookData(JSONObject object) {
 
         try {
@@ -212,14 +203,17 @@ public class MainFragment extends Fragment {
         }
         return null;
     }
-
+    private void redirect(){
+        Intent intent = new Intent(getActivity(), RegisterActivity.class);
+        startActivity(intent);
+    }
     private Intent createRegisterIntent(JSONObject object){
         // Get facebook data from login
         Bundle bFacebookData = getFacebookData(object);
         String userName = bFacebookData.getString("first_name")+""+bFacebookData.getString("last_name");
         String lastName = bFacebookData.getString("last_name");
         String firstName = bFacebookData.getString("first_name");
-        if(IfExist(userName)){
+        if(ifExist(userName)){
             return new Intent(getActivity(), HomeActivity.class)
                     .putExtra("userName", userName);
         }
@@ -227,7 +221,7 @@ public class MainFragment extends Fragment {
         intent.putExtra("last_name" , lastName).putExtra("user_name" , userName).putExtra("first_name" , firstName);
         return intent;
     }
-    private boolean IfExist(String userName){
+    private boolean ifExist(String userName){
         try {
             String result = new ApiCaller().execute("http://goevent.azurewebsites.net/api/User/Name/"+userName, "GET").get();
             AppUser u = new JsonParser().JsonToAppUser(result);
@@ -237,5 +231,22 @@ public class MainFragment extends Fragment {
             return false;
         }
 
+    }
+    private void registerOnSuccessCallback(LoginResult loginResult){
+        Toast.makeText(getActivity().getApplicationContext(),
+                "Redirecting...",Toast.LENGTH_SHORT).show();
+        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                Intent intent= createRegisterIntent(object);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id, first_name, last_name"); // Parámetros que pedimos a facebook
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 }

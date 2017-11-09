@@ -25,7 +25,6 @@ public class Event {
     private Date startTime;
     private Date endTime;
     private String description;
-   // private AppUser organisator;
     private List<AppUser> attendees;
     private byte[] coverPhoto;
     private double longitude;
@@ -34,7 +33,7 @@ public class Event {
     public Event(){
 
     }
-    public Event(int id, String name, String street, int houseNumber, String city, int postalCode, String venue, Date date, Date startTime, Date endTime, String description, AppUser organisator, List<AppUser> attendees, byte[] coverPhoto, double longitude, double latitude , String category) {
+    public Event(int id, String name, String street, int houseNumber, String city, int postalCode, String venue, Date date, Date startTime, Date endTime, String description, List<AppUser> attendees, byte[] coverPhoto, double longitude, double latitude , String category) {
         this.id = id;
         this.name = name;
         Street = street;
@@ -46,7 +45,6 @@ public class Event {
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
-        //this.organisator = organisator;
         this.attendees = attendees;
         this.coverPhoto = coverPhoto;
         this.longitude = longitude;
@@ -161,14 +159,6 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-
-   /* public AppUser getOrganisator() {
-        return organisator;
-    }
-
-    public void setOrganisator(AppUser organisator) {
-        this.organisator = organisator;
-    }*/
 
     public List<AppUser> getAttendees() {
         return attendees;

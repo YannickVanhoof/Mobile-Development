@@ -1,23 +1,24 @@
-package pxl.be.goevent;
+package pxl.be.goevent.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import pxl.be.goevent.Activities.DetailActivity;
+import pxl.be.goevent.ApiCaller;
+import pxl.be.goevent.CustomListAdapter;
+import pxl.be.goevent.Event;
+import pxl.be.goevent.JsonParser;
+import pxl.be.goevent.R;
 
 /**
  * Created by kimprzybylski on 14/10/17.
@@ -25,8 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 public class EventFragment extends Fragment {
 
-    private ArrayAdapter<String> mEventAdapter;
-    private String type;
+
     private List<Event> filteredList;
     public EventFragment(){
 
@@ -36,7 +36,6 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         String type = bundle.getString("Type");
-        List<String> events =null;
         ApiCaller caller = new ApiCaller();
         String[] name = new String[0];
         String[] date = new String[0];
@@ -46,54 +45,32 @@ public class EventFragment extends Fragment {
             Event[] eventsFromJson = parser.JsonToEventArray(json);
 
             filteredList = filterEventArrayByCategory(type,eventsFromJson);
-            //String[] data = new String[filteredList.size()];
             name = new String[filteredList.size()];
             date = new String[filteredList.size()];
 
             for (int i = 0; i < filteredList.size(); i++) {
-                //data[i] = filteredList.get(i).getName() + " Date: " + filteredList.get(i).getDateAsString();
+
                 name[i] = filteredList.get(i).getName();
                 date[i] = filteredList.get(i).getDateAsString();
             }
-            //events = new ArrayList<>(Arrays.asList(data));
+
 
         }catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
-        // The ArrayAdapter will take data from a source (like our dummy forecast) and
-        // use it to populate the ListView it's attached to.
-        /*mEventAdapter =
-                new ArrayAdapter<>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_event, // The name of the layout ID.
-                        R.id.list_item_event_textview, // The ID of the textview to populate.
-                        events);*/
-
-        final CustonListAdapter adapter = new CustonListAdapter(getActivity(), name, date);
-
+        final CustomListAdapter adapter = new CustomListAdapter(getActivity(), name, date);
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
-
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_event);
-        //listView.setAdapter(mEventAdapter);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                String detail = adapter.getItem(position);
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, detail)
-                        .putExtra("EventId" , filteredList.get(position).getId() +"");
-                startActivity(intent);
+            redirect(position);
             }
         });
-
-
-
-
         return rootView;
     }
 
@@ -108,5 +85,11 @@ public class EventFragment extends Fragment {
             }
         }
         return filtered;
+    }
+    private void redirect(int position){
+
+        Intent intent = new Intent(getActivity(), DetailActivity.class)
+                .putExtra("EventId" , filteredList.get(position).getId() +"");
+        startActivity(intent);
     }
 }

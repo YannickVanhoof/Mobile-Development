@@ -1,26 +1,28 @@
-package pxl.be.goevent;
-
+package pxl.be.goevent.Activities;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import com.facebook.login.LoginManager;
+import pxl.be.goevent.Application;
+import pxl.be.goevent.MapsActivity;
+import pxl.be.goevent.R;
 
-public class AddEventActivity extends AppCompatActivity {
+/**
+ * Created by 11500046 on 4/11/2017.
+ */
 
-
+public class RegisterActivity extends Application {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(R.layout.activity_register);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
         return true;
     }
 
@@ -31,10 +33,12 @@ public class AddEventActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
             case R.id.myevents:
-                startActivity(new Intent(this, MyEventsActivity.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 return true;
+
             case R.id.logout:
                 LoginManager.getInstance().logOut();
+                setUser(null);
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             default:

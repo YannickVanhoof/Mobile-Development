@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme"
         android:screenOrientation="portrait">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,11 +31,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".EventsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".DetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".MyEventsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.HomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.EventsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.DetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.MyEventsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.RegisterActivity" android:screenOrientation="portrait"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -57,7 +57,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".AddEventActivity"></activity>
+        <activity android:name=".Activities.AddEventActivity"></activity>
     </application>
 
 </manifest>
