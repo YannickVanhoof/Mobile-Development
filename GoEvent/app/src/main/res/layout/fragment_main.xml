@@ -21,15 +21,16 @@
         android:src="@mipmap/login_logo" />
 
 
-    <EditText
-        android:id="@+id/name_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:focusable="true"
-        android:hint="@string/logintext"
-        android:textColorHint="@android:color/white"
-        android:textColor="@android:color/white"/>
+            <EditText
+                android:id="@+id/name_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="46dp"
+                android:focusable="true"
+                android:hint="@string/logintext"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
 
     <EditText

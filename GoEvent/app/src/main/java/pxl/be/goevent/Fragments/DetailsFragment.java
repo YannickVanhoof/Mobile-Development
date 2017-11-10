@@ -87,9 +87,10 @@ public class DetailsFragment extends Fragment{
             });
 
             final Button button = rootView.findViewById(R.id.going);
-            List<String>users = new ArrayList<>();
-            if(event.getAttendees() == null){
-                users.add("No one is going");
+            //List<String>users = new ArrayList<>();
+            TextView users = rootView.findViewById(R.id.attendees);
+            if(event.getAttendees().size() == 0 ){
+                users.setText("No one is going!");
             }else {
             for (AppUser user: event.getAttendees()) {
                 if (Objects.equals(user.getUserName(), logedInUserName)){
@@ -98,15 +99,16 @@ public class DetailsFragment extends Fragment{
                     TextView view = rootView.findViewById(R.id.alreadyGoing);
                     view.setVisibility(View.VISIBLE);
                 }
-                users.add(user.getFirstname() +" " + user.getLastName());
-            }}
-            ArrayAdapter<String> userAdapter = new ArrayAdapter<>(
-                            getActivity(), // The current context (this activity)
-                            R.layout.list_item_user, // The name of the layout ID.
-                            R.id.list_item_user_textview, // The ID of the textview to populate.
-                            users);
-            ListView attendees = rootView.findViewById(R.id.attendees);
-            attendees.setAdapter(userAdapter);
+            }
+    Log.d("size", event.getAttendees().size() + "");
+                if (event.getAttendees().size() == 2){
+                    users.setText(event.getAttendees().get(0).getFirstname() + ", " + event.getAttendees().get(1).getFirstname());
+                } else if (event.getAttendees().size() == 1) {
+                    users.setText(event.getAttendees().get(0).getFirstname());
+                } else {
+                    users.setText(event.getAttendees().get(0).getFirstname() + ", " + event.getAttendees().get(1).getFirstname() + ", "+ (event.getAttendees().size() - 2) +" "+ getResources().getString(R.string.attendeesgoing));
+                }
+            }
 
             button.setOnClickListener(new View.OnClickListener(){
 

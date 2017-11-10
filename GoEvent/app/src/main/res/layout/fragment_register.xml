@@ -18,8 +18,13 @@
             <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/userName"
                 android:inputType="text" android:textColor="@android:color/white"/>
             <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/userPassword" android:textColor="@android:color/white"/>
-            <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/password"
-                android:inputType="textVisiblePassword" android:textColor="@android:color/white"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@android:color/white" />
             <TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/email" android:textColor="@android:color/white"/>
             <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/email"
                 android:inputType="textEmailAddress" android:textColor="@android:color/white"/>

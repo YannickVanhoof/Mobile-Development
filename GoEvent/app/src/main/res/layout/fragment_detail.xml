@@ -134,20 +134,18 @@
                 android:layout_margin="1dp"
                 android:textColor="@android:color/white"/>
         </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/attendees"
-                android:layout_margin="1dp"
-                android:textColor="@android:color/white"/>
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/attendees"
-                android:layout_margin="1dp"
-                android:textColor="@android:color/white"/>
-        </TableRow>
+
     </TableLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/attendees"
+        android:layout_margin="1dp"
+        android:textColor="@android:color/white"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/attendees"
+        android:textColor="@android:color/white"/>
     </LinearLayout>
 </ScrollView>

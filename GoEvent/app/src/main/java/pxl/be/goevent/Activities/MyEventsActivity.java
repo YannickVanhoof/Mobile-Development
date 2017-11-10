@@ -44,9 +44,11 @@ public class MyEventsActivity extends Application {
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
             case R.id.myevents:
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, MyEventsActivity.class));
                 return true;
-
+            case R.id.addEvent:
+                startActivity(new Intent(this, AddEventActivity.class));
+                return true;
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 setUser(null);
