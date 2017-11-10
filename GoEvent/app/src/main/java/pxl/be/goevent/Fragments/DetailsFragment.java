@@ -89,7 +89,7 @@ public class DetailsFragment extends Fragment{
             final Button button = rootView.findViewById(R.id.going);
             //List<String>users = new ArrayList<>();
             TextView users = rootView.findViewById(R.id.attendees);
-            if(event.getAttendees().size() == 0 ){
+            if(event.getAttendees() == null || event.getAttendees().size() == 0 ){
                 users.setText("No one is going!");
             }else {
             for (AppUser user: event.getAttendees()) {

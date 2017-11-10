@@ -51,6 +51,7 @@
         android:layout_margin="5pt"
         android:layout_marginTop="46dp"
         android:background="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
         android:text="@string/loginbutton" />
 
     <Button
