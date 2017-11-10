@@ -32,7 +32,8 @@ namespace EventGoApi.Controllers
         [Route ("api/event/attendees/{id}")]
         public IHttpActionResult GetAttendeesByEvent(int id)
         {
-            return Ok(repository.GetAllAttendeesForEvents(id));
+         return Ok(repository.GetAllAttendeesForEvents(id));
+
         }
 
         // POST: api/Event
@@ -56,6 +57,16 @@ namespace EventGoApi.Controllers
             }
             return BadRequest();
             
+        }
+        [Route("api/event/{id}/addUser")]
+        public IHttpActionResult AddUserToEvent(int id , User user)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.AddUserToAttendees(user, id);
+                return Ok();
+            }
+            return BadRequest();
         }
 
         // DELETE: api/Event/5

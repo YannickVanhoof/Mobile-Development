@@ -20,23 +20,21 @@ namespace EventGoApi.Controllers
         {
             return Ok(repository.GetAllUsers());
         }
+        [Route("api/User/Name/{userName}")]
+        public IHttpActionResult Get(string userName)
+        {
+            return Ok(repository.GetUserByName(userName));
+        }
 
         // GET: api/User/5
         public IHttpActionResult Get(int id)
         {
             return Ok(repository.GetUserById(id));
         }
-
-        [Route ("api/User/Name/{userName}")]
-        public IHttpActionResult Get(string userName)
+        [Route ("api/User/{id}/Events")]
+        public IHttpActionResult getMyEvents(int id)
         {
-            return Ok(repository.GetUserByName(userName));
-        }
-
-        [Route ("api/User/Events")]
-        public IHttpActionResult getMyEvents()
-        {
-            return Ok(repository.getMyEvents(2));
+            return Ok(repository.getMyEvents(id));
         }
         // POST: api/User
         public IHttpActionResult Post(User value)

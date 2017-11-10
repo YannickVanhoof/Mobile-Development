@@ -6,13 +6,11 @@ namespace EventGoData
 {
     public class Repository
     {
-        private List<Event> events;
-        private List<User> users;
-        public Repository()
+        private static int eventId = 6;
+        private static int userId = 6;
+        private  static List<Event> events = new List<Event>()
         {
-            events = new List<Event>()
-            {
-                new Event(1,"De nieuwjaarsfuif",
+            new Event(1,"De nieuwjaarsfuif",
                 "Pater van Henxthovenstraat" ,
                 1,
                 "Mol",
@@ -24,7 +22,8 @@ namespace EventGoData
                  new DateTime(2018 , 01 , 01 , 6 , 0 , 0),
                  "De nieuwjaars van KSA mol is terug." ,
                  51.186599,
-                 5.102355) ,
+                 5.102355
+                 ) ,
 
                 new Event(2,"Kendrick lamar",
                 "Schijnpoortweg " ,
@@ -38,7 +37,8 @@ namespace EventGoData
                  new DateTime(2018 , 2 , 26 , 23 , 0 , 0),
                 "Top Dawg Entertainment labelartiest en zevenvoudig Grammywinnaar Kendrick Lamar kondigt vandaag de Europese data aan van ‘THE DAMN. TOUR’: 15 data in 11 verschillende landen! De tour start begin februari in Dublin en brengt de rapper op dinsdag 27 februari naar het Sportpaleis. Niemand minder dan Brits electropopper James Blake neemt de support voor zijn rekening." ,
                 51.230194,
-                4.4429298)
+                4.4429298
+                )
                 ,
                  new Event(3,"Euro Cycling XP",
                 "Gouverneur Verwilghensingel" ,
@@ -52,7 +52,8 @@ namespace EventGoData
                  new DateTime(2018 , 01 , 01 , 6 , 0 , 0),
                  "MECC Maastricht presenteert van 20 t/m 22 oktober Euro Cycling XP als dé afsluiter van het wieler- triatlon en MTB seizoen en start van het winterseizoen veldrijden en ATB. Het is de plek waar de fietser wordt geïnspireerd, de community elkaar ontmoet en kennis en ervaringen worden gedeeld.",
                  50.9343811,
-                 5.3620677)
+                 5.3620677
+                )
                  ,
                   new Event(4, "Belgisch kampioenschap tapdans",
                 "Gouverneur Verwilghensingel" ,
@@ -66,7 +67,8 @@ namespace EventGoData
                  new DateTime(2018 , 10 , 22 , 20 , 0 , 0),
                  "Het is weer tijd voor het wereldkampioenschap tapdans" ,
                  50.932684,
-                 5.364077) ,
+                 5.364077
+                ) ,
                new Event(5,"KRC Genk - Stvv" ,
                "Stadionplein",
                 1,
@@ -79,9 +81,10 @@ namespace EventGoData
                  new DateTime(2018 , 1 , 26 , 23 , 0 , 0),
                  "De limburgse derby" ,
                  51.0050212,
-                 5.5334055) ,
-            };
-            users = new List<User>()
+                 5.5334055
+                ) ,
+             };
+        private static List<User> users = new List<User>()
             {
                 new User(1,
                         "YannickVh" ,
@@ -132,37 +135,12 @@ namespace EventGoData
 
 
             };
-            events[0].Organisator = users[0];
-            users[0].OrganisedEvents = new List<Event>() { events[0]};
-
-            events[1].Organisator = users[2];
-            users[2].OrganisedEvents = new List<Event>() { events[1] };
-
-            events[2].Organisator = users[2];
-            users[2].OrganisedEvents = new List<Event>() { events[2] };
-
-            events[3].Organisator = users[3];
-            users[3].OrganisedEvents = new List<Event>() { events[3] };
-
-            events[4].Organisator = users[4];
-            users[4].OrganisedEvents = new List<Event>() { events[4] };
-
-            events[0].Attendees = users;
-            events[3].Attendees = new List<User>()
-            {
-                users[1]
-            };
-            foreach (User u in users)
-            {
-                u.Events = new List<Event>()
-                {
-                    events[0]
-                };
-            }
-            users[2].Events = new List<Event>()
-            {
-                events[3]
-            };
+       
+        public Repository()
+        {
+                        
+           
+          
         }
 
         public Event UpdateEvent(int id, Event e)
@@ -189,7 +167,7 @@ namespace EventGoData
             {
                 User user = users.Find(us => us.Id == id);
                 users.Remove(user);
-                users.Add(user);
+                users.Add(u);
                 return user;
             }
             else
@@ -214,11 +192,6 @@ namespace EventGoData
         {
             return users.Find(u => u.Id == id);
         }
-
-        public User GetUserByName(string username)
-        {
-            return users.Find(u => u.UserName == username);
-        }
         
         public List<Event> GetAllEvents()
         {
@@ -233,29 +206,61 @@ namespace EventGoData
             return events.Find(e => e.Id == id).Attendees;
         }
 
-        public List<Event> getAllOrganisedEvents(int id)
-        {
-            return users.Find(e => e.Id == id).OrganisedEvents;
-        }
+        
         public List<Event> getMyEvents(int id)
         {
-            return users.Find(e => e.Id == id).Events;
+            List<Event> eventList = new List<Event>();
+          
+            User u = users.Find(user => user.Id == id);
+            var iets = u.UserName;
+            var ietsl = u.Events;
+           foreach (Event e in events)
+            {
+                var eventName = e.Name;
+                if (e.Attendees == null)
+                {
+                    e.Attendees = new List<User>();
+                }
+                foreach(User user in e.Attendees)
+                {
+                    var temp = user.UserName;
+                    var tempL = user.Events;
+                    if (user.UserName == u.UserName)
+                    {
+                        eventList.Add(e);   }
+                }
+            }
+            return eventList;
         }
         public List<Event> addEvent(Event e)
         {
+            e.Id = eventId;
             events.Add(e);
+            eventId++;
             return events;
         }
         public List<User> addUser(User u)
         {
+            u.Id = userId;
             users.Add(u);
+            userId++;
             return users;
         }
         public void AddUserToAttendees(User user , int id)
         {
+            if(events.Find(e => e.Id == id).Attendees == null)
+            {
+                events.Find(e => e.Id == id).Attendees = new List<User>();
+            }
             events.Find(e => e.Id == id).Attendees.Add(user);
             users.Find(u => u.Id == id).Events.Add(events.Find(e => e.Id == id));
+
         }
+        public User GetUserByName(string username)
+        {
+            return users.Find(u => u.UserName == username);
+        }
+
     }
-    }
+}
 

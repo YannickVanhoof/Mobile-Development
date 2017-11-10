@@ -15,7 +15,7 @@ namespace EventGoData
         public string Adress { get; set; }
         public string City { get; set; }
         public int PostalCode { get; set; }
-        public List<Event> OrganisedEvents { get; set; }
+       // public List<Event> OrganisedEvents { get; set; }
         public List<Event> Events { get; set; }
         public User()
         {
@@ -32,7 +32,7 @@ namespace EventGoData
             Adress = adres;
             City = city;
             PostalCode = zip;
-            OrganisedEvents = new List<Event>();
+           // OrganisedEvents = new List<Event>();
             Events = new List<Event>();
         }
 
