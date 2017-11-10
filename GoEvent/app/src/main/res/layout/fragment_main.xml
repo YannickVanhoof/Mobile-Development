@@ -54,6 +54,7 @@
         android:text="@string/loginbutton" />
 
     <Button
+        android:textColor="@android:color/white"
         android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +65,7 @@
 
 
     <com.facebook.login.widget.LoginButton
+        android:textColor="@android:color/white"
         android:id="@+id/fb_login_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

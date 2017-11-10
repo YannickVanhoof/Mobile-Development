@@ -19,31 +19,8 @@ public class RegisterActivity extends Application {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.map:
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            case R.id.myevents:
-                startActivity(new Intent(this, HomeActivity.class));
-                return true;
 
-            case R.id.logout:
-                LoginManager.getInstance().logOut();
-                setUser(null);
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
 }
 

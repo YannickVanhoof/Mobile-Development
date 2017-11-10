@@ -10,214 +10,226 @@
         android:id="@+id/scrollView" >
 
         <LinearLayout
+            android:textSize="25sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="5pt">
+            android:layout_margin="5pt"
+            >
 
             <TextView
+                android:textSize="25sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
+                android:textColor="@android:color/white"
                 android:text="@string/name"
-                android:background="@android:color/white"
-                android:textSize="@dimen/large_size"/>
+                />
 
             <EditText
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
                 android:id="@+id/name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:inputType="text"/>
 
             <TextView
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/street"
                 android:text="@string/street"
-                android:background="@android:color/white"
-                android:textSize="@dimen/large_size"/>
+                />
 
             <EditText
+                android:inputType="text"
+                android:textColor="@android:color/white"
                 android:id="@+id/street_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"
+                android:layout_marginBottom="5pt"/>
 
             <TextView
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/houseNumber"
                 android:text="@string/houseNumber"
-                android:background="@android:color/white"
-                android:textSize="@dimen/large_size"/>
+                />
 
             <EditText
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
                 android:id="@+id/houseNumber_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:background="@android:color/white"
-                android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:layout_marginBottom="5pt"/>
 
             <TextView
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/city"
                 android:text="@string/city"
-                android:background="@android:color/white"
-                android:textSize="@dimen/large_size"/>
+                />
 
             <EditText
+                android:inputType="text"
+                android:textColor="@android:color/white"
                 android:id="@+id/city_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"
+                android:layout_marginBottom="5pt"/>
 
             <TextView
+                android:textColor="@android:color/white"
                 android:id="@+id/postcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:text="@string/PostalCode"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"
+                android:text="@string/PostalCode" />
 
             <EditText
+                android:textColor="@android:color/white"
                 android:id="@+id/postcode_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:background="@android:color/white"
-                android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"
+                android:layout_marginBottom="5pt"/>
 
             <TextView
+                android:textColor="@android:color/white"
                 android:id="@+id/venue"
+                android:textSize="25sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:text="@string/venue"
-                android:textSize="@dimen/large_size"/>
+                android:text="@string/venue" />
 
             <EditText
+                android:inputType="text"
+                android:textColor="@android:color/white"
                 android:id="@+id/venue_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"
+                android:layout_marginBottom="5pt"/>
 
             <TextView
                 android:id="@+id/category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:textColor="@android:color/white"
                 android:text="@string/category"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <Spinner
+                android:textColor="@android:color/white"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/type_spinner"
-                android:background="@android:color/white"
-                android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"></Spinner>
+                android:layout_marginBottom="5pt"></Spinner>
 
             <TextView
+                android:textColor="@android:color/white"
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:text="@string/Date"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <EditText
+                android:textColor="@android:color/white"
                 android:id="@+id/date_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="datetime"
-                android:background="@android:color/white"
                 android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <TextView
+                android:textColor="@android:color/white"
                 android:id="@+id/startTime_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:text="@string/StartTime"
-                android:textSize="@dimen/large_size"/>
-
+                android:textSize="25sp"/>
             <EditText
+                android:textColor="@android:color/white"
                 android:id="@+id/startTime_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5pt"
-                android:background="@android:color/white"
                 android:inputType="time"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <TextView
+                android:textColor="@android:color/white"
                 android:id="@+id/endTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:text="@string/EndTime"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <EditText
+                android:textColor="@android:color/white"
                 android:id="@+id/endTime_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5pt"
-                android:background="@android:color/white"
                 android:inputType="time"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <TextView
+                android:textColor="@android:color/white"
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:text="@string/Description"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <EditText
+                android:inputType="textMultiLine"
+                android:textColor="@android:color/white"
                 android:id="@+id/description_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:layout_marginBottom="5pt"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/image"/>
+                android:id="@+id/image"
+                />
 
             <Button
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:id="@+id/chooseButton"
                 android:text="@string/choose_image"
                 android:background="@android:color/holo_red_dark"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
 
             <Button
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5pt"
                 android:id="@+id/addButton"
                 android:text="@string/add_event"
                 android:background="@android:color/holo_red_dark"
-                android:textSize="@dimen/large_size"/>
+                android:textSize="25sp"/>
         </LinearLayout>
 
     </ScrollView>
